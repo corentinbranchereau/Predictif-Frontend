@@ -13,12 +13,12 @@ public class AuthentifierClientAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
-        /*
-        String login = request.getParameter("login");
+        
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         Service service = new Service();
-        Client client = service.authentifierClient(login, password);
+        Client client = (Client) service.authentifierUtilisateur(email, password);
 
         request.setAttribute("client", client);
         
@@ -30,7 +30,7 @@ public class AuthentifierClientAction extends Action {
         else {
             session.removeAttribute("idClient");
         }
-        */
+        
     }
     
 }

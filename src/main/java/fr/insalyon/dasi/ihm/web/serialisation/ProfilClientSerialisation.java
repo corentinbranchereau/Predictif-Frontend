@@ -17,7 +17,7 @@ public class ProfilClientSerialisation extends Serialisation {
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /*
+        
         Client client = (Client)request.getAttribute("client");
         
         JsonObject container = new JsonObject();
@@ -30,7 +30,7 @@ public class ProfilClientSerialisation extends Serialisation {
             jsonClient.addProperty("id", client.getId());
             jsonClient.addProperty("nom", client.getNom());
             jsonClient.addProperty("prenom", client.getPrenom());
-            jsonClient.addProperty("mail", client.getMail());
+            jsonClient.addProperty("mail", client.getEmail());
 
             container.add("client", jsonClient);
         }
@@ -40,7 +40,7 @@ public class ProfilClientSerialisation extends Serialisation {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
         gson.toJson(container, out);
         out.close();
-        */
+        
     }
 
 }

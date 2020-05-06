@@ -28,7 +28,7 @@
         <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
         
         <!-- Champs et Bouton de Formulaire -->
-        Identifiant: <input type="text" id="champ-login" size="40" />
+        Email: <input type="text" id="champ-login" size="40" />
         <br/>
         Mot de passe: <input type="password" id="champ-password" />
         <br/>
@@ -52,7 +52,7 @@
                         method: 'POST',
                         data: {
                             todo: 'connecter',
-                            login: champLogin,
+                            email: champLogin,
                             password: champPassword
                         },
                         dataType: 'json'

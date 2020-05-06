@@ -56,6 +56,11 @@ h2{
         flex-direction: row;
         justify-content: space-between;
     }
+    
+    .top-buttons button{
+            width:20vw;
+            height: 4vw;
+    }
 
 }
 @media all and (max-width:1200px) and (min-width:600px){
@@ -67,8 +72,8 @@ h2{
         justify-content: space-between;
     }
     
-     button{
-    width:200px;;
+    .top-buttons button{
+    width:200px;
     height: 60px;
 }
 
@@ -81,8 +86,8 @@ h2{
     }
     
  
-    button{
-    width:150px;;
+    .top-buttons button{
+    width:200px;
     height: 60px;
 }
 
@@ -143,8 +148,6 @@ header{
 }
 
 .top-buttons button{
-    width:20vw;
-    height: 3vw;
     margin: 20px;
     border:3px solid white;
     border-radius:5px;
@@ -185,4 +188,11 @@ header{
     margin-right:10vw;
     margin-top:100px;
     text-align: center;
+}
+
+/*
+       ------------ CONNEXION ----------
+     
+*/input{
+    border:2px solid black;
 }
