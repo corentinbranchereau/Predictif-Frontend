@@ -46,52 +46,6 @@ h2{
     justify-content: center;
 }
 
-
-
-@media all and (min-width:1200px){
-    
-    .top-buttons{
-        width:100vw;
-        display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    
-    .top-buttons button{
-            width:20vw;
-            height: 4vw;
-    }
-
-}
-@media all and (max-width:1200px) and (min-width:600px){
-    
-    .top-buttons{
-        width:100vw;
-        display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    
-    .top-buttons button{
-    width:200px;
-    height: 60px;
-}
-
-}
-@media all and (max-width:600px){
-    .top-buttons{
-        display:flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-    
- 
-    .top-buttons button{
-    width:200px;
-    height: 60px;
-}
-
-}
 /*
        ------------ GENERAL HEADER ----------
      
@@ -156,6 +110,50 @@ header{
     padding:5px;
 }
 
+@media all and (min-width:1200px){
+    
+    .top-buttons{
+        width:100vw;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .top-buttons button{
+            width:20vw;
+            height: 4vw;
+    }
+
+}
+@media all and (max-width:1200px) and (min-width:600px){
+    
+    .top-buttons{
+        width:100vw;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .top-buttons button{
+    width:200px;
+    height: 60px;
+}
+
+}
+@media all and (max-width:600px){
+    .top-buttons{
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+ 
+    .top-buttons button{
+    width:200px;
+    height: 60px;
+}
+
+}
 /*
        ------------ HOMEPAGE ----------
      
@@ -193,6 +191,24 @@ header{
 /*
        ------------ CONNEXION ----------
      
-*/input{
+*/
+
+.new-account-form{
     border:2px solid black;
+    text-align: right;
+}
+
+.new-account-form input{
+    border:1px solid grey;
+}
+.account-main-container{
+    width:60vw;
+    font-size:25px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+}
+.new-account-name{
+    text-align:right;
 }

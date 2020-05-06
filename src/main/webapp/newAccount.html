@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Creer un Compte</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" onclick="window.location.href='./index.html'">Retour à l'Accueil</button>
+            <button type="button" onclick="window.location.href='./login.html'">Se Connecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    
+    <body>
+        <div class="title">
+            <h1>Créer un Compte</h1>
+        </div>
+        <div class="account-main-container">
+            <div class="new-account-name">
+                Prenom : <br>
+            </div>
+            <div class="new-account-form">
+                Prénom:<input type="text" id="champ-prenom" size="40" /><br/>
+                Nom: <input type="text" id="champ-nom" size="40" /><br/>
+                Genre: <input type="radio" id="Masculin" name="genre" value="Masculin"/> 
+                        <label for="Masculin">Masculin</label>
+                       <input type="radio" id="Feminin" name="genre" value="Feminin"/>
+                       <label for="Feminin">Feminin</label>
+                       <input type="radio" id="Autre" name="genre" value="Autre"/>
+                       <label for="Autre">Autre</label><br/>
+                Adresse: <input type="text" id="champ-login" size="40" /><br/>
+                Téléphone: <input type="text" id="champ-login" size="40" /><br/>
+                Date de Naissance: <input type="text" id="champ-login" size="40" /><br/>
+                Email: <input type="text" id="champ-login" size="40" /><br/>
+                Mot de Passe: <input type="password" id="champ-login" size="40" /><br/>
+            </div>
+        </div>
+        
+    </body>
+</html>
