@@ -47,7 +47,6 @@ public class ListeMediumsSerialisation extends Serialisation{
                 jsonMedium.addProperty("formation",a.getFormation());
                 jsonMedium.addProperty("promotion", a.getPromotion());
             } else if (m instanceof Cartomancien){
-                Cartomancien c = (Cartomancien)m;
                 jsonMedium.addProperty("type","Cartomancien");
             }
                 
