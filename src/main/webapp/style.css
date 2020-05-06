@@ -187,7 +187,92 @@ header{
     margin-top:100px;
     text-align: center;
 }
+/*
+       ------------ Caroussel ----------
+     
+*/
 
+.caroussel-container{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    margin:10vw;
+    font-size:30px;
+}
+
+.caroussel-sub-container{
+    display:flex;
+    flex-direction: column;
+    width:80vw;
+    height:800px;
+    border:2px solid black;
+}
+.caroussel-nom{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    height:400px;
+}
+
+.caroussel-nom-text{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    height:400px;
+}
+
+.caroussel-nom-photo{
+
+}
+
+#caroussel-image{
+    height:20vw;
+    width:20vw;
+    margin:2vw;
+}
+
+#caroussel-image-type{
+    height:5vw;
+    width:5vw;
+}
+.caroussel-nom p{
+    text-align:center;
+    padding:20px;
+}
+
+.caroussel-liste-cases{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    height:400px;
+}
+.caroussel-column-cases{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    height:400px;
+}
+
+.caroussel-self-case{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    height:200px;
+    border:1px solid black;
+}
+
+#medium-presentation{
+    font-style:italic;
+}
+
+#medium-denomination{
+    font-weight: bold;
+}
 /*
        ------------ CONNEXION ----------
      

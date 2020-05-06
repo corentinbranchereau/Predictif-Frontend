@@ -5,6 +5,7 @@
     <title>TD DASI- Initiation Web</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
       <body>
         <div class="header">
@@ -23,7 +24,101 @@
               <p>Ne laissez plus place au hasard, et faites vous épauler par nos 
 experts en voyance afin de prendre la meilleur décision ! </p>
           </div>
+          <div class="caroussel-container">
+              <button id="caroussel-precedent"><img src="images/arrow-left.png"/></button>
+              <div class="caroussel-sub-container">
+                  <div class="caroussel-nom">
+                      <div class="caroussel-nom-photo">
+                          <img id="caroussel-image"/>
+                      </div>
+                      <div class="caroussel-nom-text">
+                          <p id="medium-denomination"></p>
+                      <p id="medium-presentation"></p>
+                      </div>
+                  </div>
+                  <div class="caroussel-liste-cases">
+                      <div class="caroussel-column-cases">
+                          <div class="caroussel-self-case">
+                              <img id="caroussel-image-type"/>
+                              <p id="medium-type"></p>
+                          </div>
+                          <div class="caroussel-self-case">
+                              <p id="medium-support"></p>
+                          </div>
+                      </div>
+                      <div class="caroussel-column-cases">
+                          <div class="caroussel-self-case">
+                              <p id="medium-formation"></p>
+                          </div>
+                          <div class="caroussel-self-case">
+                              <p> Contacter dès Maintenant!</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <button id="caroussel-suivant"><img src="images/arrow-right.png"/></button>
+          </div>
           
-          
+          <script>
+             var idMedium=0;
+            $(document).ready( function () {
+                
+                 function initMedium() { // Fonction appelée lors du clic sur le bouton
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'listerMediums'
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                       $('#medium-denomination').html("Nom : "+response.mediums[idMedium].denomination);
+                       $('#medium-presentation').html(response.mediums[idMedium].presentation);
+                       $('#medium-type').html(response.mediums[idMedium].type);
+                       var source="images/profil"+idMedium/2+".png";
+                       var source2="images/"+response.mediums[idMedium].type+".png";
+                       console.log(source2);
+                       $('#caroussel-image').attr('src',source);
+                       $('#caroussel-image-type').attr('src',source2);
+                       if(response.mediums[idMedium].type==="Spirite"){
+                           $('#medium-support').html("support : "+ response.mediums[idMedium].support);
+                           $('#medium-formation').html("formation : Institut de Divination");
+                       }
+                        if(response.mediums[idMedium].type==="Cartomancien"){
+                           $('#medium-support').html("suppport :  Cartes");
+                           $('#medium-formation').html("formation : Master en Astrologie");
+                       }
+                        if(response.mediums[idMedium].type==="Astrologue"){
+                           $('#medium-support').html("promotion :"+response.mediums[idMedium].promotion);
+                           $('#medium-formation').html("formation : "+response.mediums[idMedium].formation);
+                       }
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always( function () { // Fonction toujours appelée
+                        
+                        
+                    });
+                };
+                
+                $('#caroussel-suivant').on( 'click', function () { 
+                    if(idMedium<9){
+                        idMedium+=2;
+                    }
+                    initMedium();
+                });
+                $('#caroussel-precedent').on( 'click', function () { 
+                    if(idMedium>1){
+                        idMedium-=2;
+                    }
+                    initMedium();
+                });
+                initMedium();
+            });
+        </script>
        </body>
 </html>
