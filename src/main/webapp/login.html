@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
         <meta charset="UTF-8">
         <title>Connexion</title>
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" onclick="window.location.href='./index.html'">Retour à l'Accueil</button>
+            <button type="button" onclick="window.location.href='./login.html'">Créer un compte</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
     <body>
-
-        <h1>Connexion</h1>
-
+        
+        <div class="title">
+            <h1>Connexion</h1>
+        </div>
         <!-- Paragraphe avec id="notification" pour les messages de notification -->
         <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
         
@@ -20,9 +34,7 @@
         <br/>
         <button id="bouton-connexion">Connexion</button>
         
-        <!-- Lien vers l'accueil -->
-        <p><a href="index.html">Retour à la page d'Accueil</a></p>
-
+      
         <script>
             $(document).ready( function () {
                 $('#bouton-connexion').on( 'click', function () { // Fonction appelée lors du clic sur le bouton
