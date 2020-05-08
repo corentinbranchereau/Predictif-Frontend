@@ -6,9 +6,11 @@ import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.HistoriqueClientAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumsAction;
+import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
 import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
@@ -62,6 +64,10 @@ public class ActionServlet extends HttpServlet {
                 case "listerMediums":
                     action = new ListerMediumsAction();
                     serialisation = new ListeMediumsSerialisation();
+                    break;
+                case "profilAstral":
+                    action = new ProfilAstralAction();
+                    serialisation = new ProfilAstralSerialisation();
                     break;
                 case "historiqueClient":
                     action = new HistoriqueClientAction();

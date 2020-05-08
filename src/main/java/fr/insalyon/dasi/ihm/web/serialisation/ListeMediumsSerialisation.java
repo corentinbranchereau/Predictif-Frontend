@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import static fr.insalyon.dasi.ihm.web.serialisation.SerialisationUtils.MediumToJson;
 import fr.insalyon.dasi.metier.modele.Astrologue;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Medium;
@@ -30,26 +31,7 @@ public class ListeMediumsSerialisation extends Serialisation{
         JsonArray jsonListeMediums = new JsonArray();
             
         for(Medium m : listeMediums){
-            JsonObject jsonMedium = new JsonObject();
-            
-            jsonMedium.addProperty("id",m.getId());
-            jsonMedium.addProperty("denomination",m.getDenomination());
-            jsonMedium.addProperty("genre",m.getGenre().toString());
-            jsonMedium.addProperty("presentation",m.getPresentation());
-            
-            if(m instanceof Spirite){
-                Spirite s = (Spirite)m;
-                jsonMedium.addProperty("type","Spirite");
-                jsonMedium.addProperty("support",s.getSupport());
-            } else if (m instanceof Astrologue){
-                Astrologue a = (Astrologue)m;
-                jsonMedium.addProperty("type","Astrologue");
-                jsonMedium.addProperty("formation",a.getFormation());
-                jsonMedium.addProperty("promotion", a.getPromotion());
-            } else if (m instanceof Cartomancien){
-                jsonMedium.addProperty("type","Cartomancien");
-            }
-                
+            JsonObject jsonMedium = MediumToJson(m);
             jsonListeMediums.add(jsonMedium);
         }
         

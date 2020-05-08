@@ -297,3 +297,88 @@ header{
 .new-account-name{
     text-align:right;
 }
+
+/*
+       ------------ TABLEAU DE BORD CLIENT ----------
+     
+*/
+
+.title h2{
+    text-align: center;
+    font-size: 30px;
+}
+
+.tableau-client-container{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items : center;
+}
+
+.profil-astral-container{
+    order: 1;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profil-astral-container p{
+    margin: 30px;
+}
+
+.profil-astral-container h2{
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 2px solid black;
+}
+
+.historique-client-container{
+    width:50%;
+    order: 2;
+    border: 2px solid black; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.historique-client-container h2{
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 2px solid black;
+}
+
+.historique-client-container .historique-client-list{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.historique-client-container .consultation{
+    width:90%;
+    text-align: center;
+    border: 2px solid black;
+    margin-bottom: 3px;
+    padding: 10px;
+}
+
+#bouton-demande-consultation{
+    margin: 20px;
+    border:3px solid black;
+    border-radius:5px;
+    background: #993366;
+    color:white;
+    padding:10px;
+}

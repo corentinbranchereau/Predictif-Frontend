@@ -65,7 +65,7 @@ public class InscrireClientAction extends Action{
         ProfilAstral profil = null;
         if(client!=null)
         {
-            //profil = service.genererProfilAstral(client);
+            profil = service.genererProfilAstral(client);
         }
         
         //Ajout dans la requête

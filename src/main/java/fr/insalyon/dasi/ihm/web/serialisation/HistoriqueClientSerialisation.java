@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import static fr.insalyon.dasi.ihm.web.serialisation.SerialisationUtils.MediumToJson;
 import fr.insalyon.dasi.metier.modele.Astrologue;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Consultation;
@@ -11,6 +12,7 @@ import fr.insalyon.dasi.metier.modele.Medium;
 import fr.insalyon.dasi.metier.modele.Spirite;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,7 @@ public class HistoriqueClientSerialisation extends Serialisation{
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        List<Consultation> historiqueClient = (List<Consultation>)request.getAttribute("mediums");
+        List<Consultation> historiqueClient = (List<Consultation>)request.getAttribute("historique");
         
         JsonObject container = new JsonObject();
         
@@ -32,39 +34,26 @@ public class HistoriqueClientSerialisation extends Serialisation{
          
         if(historiqueClient!=null){
             for(Consultation c : historiqueClient){
-                JsonObject jsonConsultation = new JsonObject();
+                if(c.getEstTerminee()){
+                    JsonObject jsonConsultation = new JsonObject();
 
-                //Sérialisation de la consultation et de ses propriétés
-                jsonConsultation.addProperty("id",c.getId());
-                jsonConsultation.addProperty("dateDebut",c.getDateDebut().toString());
-                jsonConsultation.addProperty("duree",c.getDuree());
-                jsonConsultation.addProperty("commentaire",c.getCommentaire());
-                jsonConsultation.addProperty("estTerminee",c.getEstTerminee());
+                    SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy 'à' hh'h'mm");
+                    
+                    //Sérialisation de la consultation et de ses propriétés
+                    jsonConsultation.addProperty("id",c.getId());
+                    jsonConsultation.addProperty("dateDebut",formater.format(c.getDateDebut()));
+                    jsonConsultation.addProperty("duree",c.getDuree());
+                    jsonConsultation.addProperty("commentaire",c.getCommentaire());
+                    jsonConsultation.addProperty("estTerminee",c.getEstTerminee());
 
-                //Sérialisation du médium associé
-                Medium m = c.getMedium();
-                JsonObject jsonMedium = new JsonObject();
-                jsonMedium.addProperty("id",m.getId());
-                jsonMedium.addProperty("denomination",m.getDenomination());
-                jsonMedium.addProperty("genre",m.getGenre().toString());
-                jsonMedium.addProperty("presentation",m.getPresentation());
+                    //Sérialisation du médium associé
+                    Medium m = c.getMedium();
 
-                if(m instanceof Spirite){
-                    Spirite s = (Spirite)m;
-                    jsonMedium.addProperty("type","Spirite");
-                    jsonMedium.addProperty("support",s.getSupport());
-                } else if (m instanceof Astrologue){
-                    Astrologue a = (Astrologue)m;
-                    jsonMedium.addProperty("type","Astrologue");
-                    jsonMedium.addProperty("formation",a.getFormation());
-                    jsonMedium.addProperty("promotion", a.getPromotion());
-                } else if (m instanceof Cartomancien){
-                    jsonMedium.addProperty("type","Cartomancien");
+                    JsonObject jsonMedium = MediumToJson(m);
+                    jsonConsultation.add("medium",jsonMedium);
+
+                    jsonListeConsultation.add(jsonConsultation);
                 }
-
-                jsonConsultation.add("medium",jsonMedium);
-
-                jsonListeConsultation.add(jsonConsultation);
             }
         }
         container.add("consultations",jsonListeConsultation);

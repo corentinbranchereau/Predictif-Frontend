@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Tableau de bord client</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" onclick="window.location.href='./index.html'">Retour à l'Accueil</button>
+            <button type="button" onclick="window.location.href='./login.html'">Se déconnecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    
+    <body>
+        <div class="title">
+            <h2 id="prenom_client"></h2>
+        </div>
+        <div class="tableau-client-container">
+            <div class="profil-astral-container">
+                <div class="profil-astral-header">
+                    <h2>Profil Astral</h2>
+                </div>
+                <div class="profil-astral-champs">
+                    <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
+                    <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
+                    <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
+                    <p><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
+                </div>
+            </div>
+
+            <div class="historique-client-container">
+                <div class="historique-client-header">
+                    <h2>Mon historique de consultation</h2>
+                </div>
+                <div class="historique-client-list" id="list-consultation"></div>
+            </div>
+        </div>
+        
+        <button type = "button" id="bouton-demande-consultation" onclick="window.location.href='./index.html'">> Demande Consultation</button>
+        
+        <script>          
+            function initConsultation() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'historiqueClient'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var list = document.getElementById("list-consultation");
+                    var consultations = response.consultations;
+                    console.log(consultations);
+                    if(consultations.length==0)
+                    {
+                        var p = document.createElement('p');
+                        p.className="consultation";
+                        p.idName=0;
+                        p.innerHTML="<strong>Vous n'avez pas encore consulté. N'hésitez plus !</strong>";
+                        list.appendChild(p);
+                    }
+                    else
+                    {
+                        for(var i = 0; i<consultations.length; i++)
+                        {
+                            var c = consultations[i];
+                            var p = document.createElement('p');
+                            p.className="consultation";
+                            p.idName=c.id;
+                            p.innerHTML="<strong>"+c.medium.type+"</strong> : le "+c.dateDebut+" - "+c.medium.denomination;
+                            list.appendChild(p);
+                        }
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+            };
+            
+            function initProfilAstral() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'profilAstral'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    $('#prenom_client').html("Heureux de vous revoir,&nbsp"+response.prenom);
+                    
+                    var profil = response.profilAstral;
+                    
+                    $('#champ-zodiaque').html(profil.zodiaque);
+                    $('#champ-chinois').html(profil.astroChinois);
+                    $('#champ-couleur').html(profil.couleur);
+                    $('#champ-totem').html(profil.animalTotem);
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+            };
+                
+            $(document).ready( function (){ //Appelé à la fin de la page HTML 
+                initProfilAstral();
+                initConsultation();
+            });
+        </script>
+        
+    </body>
+</html>
