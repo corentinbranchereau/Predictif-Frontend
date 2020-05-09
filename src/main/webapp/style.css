@@ -207,6 +207,7 @@ header{
     height:800px;
     border:2px solid black;
 }
+
 .caroussel-nom{
     display:flex;
     flex-direction: row;
@@ -229,13 +230,13 @@ header{
 
 }
 
-#caroussel-image{
+#caroussel-image,#caroussel-imageP,#caroussel-imageS{
     height:20vw;
     width:20vw;
     margin:2vw;
 }
 
-#caroussel-image-type{
+#caroussel-image-type,#caroussel-image-typeP,#caroussel-image-typeS{
     height:5vw;
     width:5vw;
 }
@@ -273,10 +274,38 @@ header{
 #medium-denomination{
     font-weight: bold;
 }
+
+.caroussel-container .button{
+    background-color: white;
+    margin:30px;
+    width:10%;
+}
 /*
        ------------ CONNEXION ----------
      
 */
+
+.connexion{
+    text-align: left;
+    font-size: 20px;
+}
+.connexion input{
+    border:1px solid grey;
+    padding:5px;
+}
+#bouton-connexion{
+    background-color:#993366;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+    border:1px solid black;
+}
+
+/*
+       ------------ CREER UN COMPTE ----------
+     
+*/
+
 
 .new-account-form{
     border:2px solid black;

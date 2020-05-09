@@ -25,7 +25,7 @@
 experts en voyance afin de prendre la meilleur décision ! </p>
           </div>
           <div class="caroussel-container">
-              <button id="caroussel-precedent"><img src="images/arrow-left.png"/></button>
+               <button class="button" id="caroussel-precedent"><img src="images/arrow-left.png"/></button>
               <div class="caroussel-sub-container">
                   <div class="caroussel-nom">
                       <div class="caroussel-nom-photo">
@@ -56,14 +56,18 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                       </div>
                   </div>
               </div>
-              <button id="caroussel-suivant"><img src="images/arrow-right.png"/></button>
+              <button class="button" id="caroussel-suivant"><img src="images/arrow-right.png"/></button>   
           </div>
           
           <script>
              var idMedium=0;
+             var idMediumSuivant=2;
+             var idMediumPrecedent=0;
+             var nbMedium=0;
+             var listeMediums;
             $(document).ready( function () {
                 
-                 function initMedium() { // Fonction appelée lors du clic sur le bouton
+                 function apelAjax() { // Fonction appelée lors du clic sur le bouton
                     // Appel AJAX
                     $.ajax({
                         url: './ActionServlet',
@@ -74,26 +78,10 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                         dataType: 'json'
                     })
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                       $('#medium-denomination').html("Nom : "+response.mediums[idMedium].denomination);
-                       $('#medium-presentation').html(response.mediums[idMedium].presentation);
-                       $('#medium-type').html(response.mediums[idMedium].type);
-                       var source="images/profil"+idMedium/2+".png";
-                       var source2="images/"+response.mediums[idMedium].type+".png";
-                       console.log(source2);
-                       $('#caroussel-image').attr('src',source);
-                       $('#caroussel-image-type').attr('src',source2);
-                       if(response.mediums[idMedium].type==="Spirite"){
-                           $('#medium-support').html("support : "+ response.mediums[idMedium].support);
-                           $('#medium-formation').html("formation : Institut de Divination");
-                       }
-                        if(response.mediums[idMedium].type==="Cartomancien"){
-                           $('#medium-support').html("suppport :  Cartes");
-                           $('#medium-formation').html("formation : Master en Astrologie");
-                       }
-                        if(response.mediums[idMedium].type==="Astrologue"){
-                           $('#medium-support').html("promotion :"+response.mediums[idMedium].promotion);
-                           $('#medium-formation').html("formation : "+response.mediums[idMedium].formation);
-                       }
+                       nbMedium=response.mediums.length;
+                       idMediumPrecedent=nbMedium-2;
+                       listeMediums=response.mediums;
+                       initMedium();
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                         console.log('Error',error); // LOG dans Console Javascript
@@ -105,19 +93,87 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                     });
                 };
                 
-                $('#caroussel-suivant').on( 'click', function () { 
-                    if(idMedium<9){
-                        idMedium+=2;
+                
+                function initMedium(){
+                    nbMedium=listeMediums.length;
+                       $('#medium-denomination').html("Nom : "+listeMediums[idMedium].denomination);
+                       $('#medium-presentation').html(listeMediums[idMedium].presentation);
+                       $('#medium-type').html(listeMediums[idMedium].type);
+                       var source="images/profil"+idMedium/2+".png";
+                       var source2="images/"+listeMediums[idMedium].type+".png";
+                       $('#caroussel-image').attr('src',source);
+                       $('#caroussel-image-type').attr('src',source2);
+                       if(listeMediums[idMedium].type==="Spirite"){
+                           $('#medium-support').html("Support : "+ listeMediums[idMedium].support);
+                           $('#medium-formation').html("Formation : Institut de Divination");
+                       }
+                        if(listeMediums[idMedium].type==="Cartomancien"){
+                           $('#medium-support').html("Support :  cartes");
+                           $('#medium-formation').html("Formation : Master en Astrologie");
+                       }
+                        if(listeMediums[idMedium].type==="Astrologue"){
+                           $('#medium-support').html("Promotion :"+listeMediums[idMedium].promotion);
+                           $('#medium-formation').html("Formation : "+listeMediums[idMedium].formation);
+                       }
+                      
+                };
+                
+               $('#caroussel-suivant').on( 'click', function (){
+                    idMedium+=2;
+                    idMediumPrecedent+=2;
+                    idMediumSuivant+=2;
+                    if(idMedium>=nbMedium){
+                        idMedium=0;
                     }
+                     if(idMediumPrecedent>=nbMedium){
+                        idMediumPrecedent=0;
+                    }
+                     if(idMediumSuivant>=nbMedium){
+                        idMediumSuivant=0;
+                    }
+                     $(".caroussel-sub-container").animate({
+                        opacity:'0'
+                    },10);
+                    $(".caroussel-sub-container").animate({
+                        opacity:'1'
+                    },500);
                     initMedium();
                 });
+                
                 $('#caroussel-precedent').on( 'click', function () { 
-                    if(idMedium>1){
-                        idMedium-=2;
+                    idMedium-=2;
+                    idMediumPrecedent-=2;
+                    idMediumSuivant-=2;
+                    if(idMedium<0){
+                        idMedium=nbMedium-2;
                     }
+                    if(idMediumPrecedent<0){
+                        idMediumPrecedent=nbMedium-2;
+                    }
+                    if(idMediumSuivant<0){
+                        idMediumSuivant=nbMedium-2;
+                    }
+                    $(".caroussel-sub-container").animate({
+                        opacity:'0'
+                    },10);
+                    $(".caroussel-sub-container").animate({
+                        opacity:'1'
+                    },500);
                     initMedium();
                 });
-                initMedium();
+                apelAjax();
+                /*
+                $('#caroussel-suivant').click(function(){
+                    $(".caroussel-sub-container").animate({
+                        right:'-1500px'
+                    });
+                    $(".caroussel-sub-containerP").animate({
+                        left:'10vw',
+                        rigth:'10vw'
+                    });
+                });
+               
+                */
             });
         </script>
        </body>
