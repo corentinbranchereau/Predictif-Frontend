@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import static fr.insalyon.dasi.ihm.web.serialisation.SerialisationUtils.ConsultationToJson;
 import static fr.insalyon.dasi.ihm.web.serialisation.SerialisationUtils.MediumToJson;
 import fr.insalyon.dasi.metier.modele.Astrologue;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
@@ -35,16 +36,8 @@ public class HistoriqueClientSerialisation extends Serialisation{
         if(historiqueClient!=null){
             for(Consultation c : historiqueClient){
                 if(c.getEstTerminee()){
-                    JsonObject jsonConsultation = new JsonObject();
-
-                    SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy 'à' hh'h'mm");
-                    
-                    //Sérialisation de la consultation et de ses propriétés
-                    jsonConsultation.addProperty("id",c.getId());
-                    jsonConsultation.addProperty("dateDebut",formater.format(c.getDateDebut()));
-                    jsonConsultation.addProperty("duree",c.getDuree());
-                    jsonConsultation.addProperty("commentaire",c.getCommentaire());
-                    jsonConsultation.addProperty("estTerminee",c.getEstTerminee());
+                    //Sérialisation de la consultation
+                    JsonObject jsonConsultation = ConsultationToJson(c,false);
 
                     //Sérialisation du médium associé
                     Medium m = c.getMedium();

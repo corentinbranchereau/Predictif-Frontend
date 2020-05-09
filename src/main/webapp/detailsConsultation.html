@@ -4,14 +4,14 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
 
         <meta charset="UTF-8">
-        <title>Tableau de bord client</title>
+        <title>Détail de mon historique</title>
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     
     <header>
          <div class="top-buttons">
-            <button type="button" class = "hvr-shrink" onclick="window.location.href='./index.html'">Demande de consultation</button>
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
             <button type="button" class = "hvr-shrink" onclick="window.location.href='./index.html'">Se déconnecter</button>
           </div>
           <div class="container-header">
@@ -22,26 +22,34 @@
     
     <body>
         <div class="title">
-            <h2 id="prenom_client"></h2>
+            <h2>Détail de mon historique</h2>
         </div>
-        <div class="tableau-client-container">
-            <div class="profil-astral-container">
-                <div class="profil-astral-header">
-                    <h2>Profil Astral</h2>
-                </div>
-                <div class="profil-astral-champs">
-                    <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
-                    <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
-                    <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
-                    <p><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
-                </div>
+        <div class="consultation-detail-container">
+            <div class = "titre-header">
+                <h2>Détail de la consultation</h2>
             </div>
-
-            <div class="historique-client-container">
-                <div class="historique-client-header">
-                    <h2>Mon historique de consultation</h2>
+            
+            <div class="date-container">
+                <p id="champ-date"></p>
+                <p id="champ-duree"></p>
+            </div>
+            
+            <div class="medium-container">
+                <div class="medium-container-select">
+                    <p id="champ-medium-select"></p>
                 </div>
-                <div class="historique-client-list" id="list-consultation"></div>
+                <div class="medium-container-genre">
+                    <p id="champ-medium-genre"></p>
+                </div>
+                <div class="medium-container-type">
+                    <p id="champ-medium-type"></p>
+                </div>
+                <div class="medium-container-presentation">
+                    <p id="champ-medium-presentation"></p>
+                </div>
+                <div class="medium-container-autre">
+                    <p id="champ-medium-autre"></p>
+                </div>
             </div>
         </div>
         
@@ -54,35 +62,31 @@
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'historiqueClient'
+                        todo: 'detailsConsultation',
+                        commentaire: false
                     },
                     dataType: 'json'
                 })
                 .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    var list = document.getElementById("list-consultation");
-                    var consultations = response.consultations;
-                    console.log(consultations);
-                    if(consultations.length==0)
+                    var consultation = response.consultation;
+                    console.log(consultation);
+                    if(consultation != null)
                     {
                         var p = document.createElement('p');
-                        p.className="consultation";
-                        p.idName=0;
-                        p.innerHTML="<strong>Vous n'avez pas encore consulté. N'hésitez plus !</strong>";
-                        list.appendChild(p);
-                    }
-                    else
-                    {
-                        for(var i = 0; i<consultations.length; i++)
-                        {
-                            var c = consultations[i];
-                            var p = document.createElement('p');
-                            p.className="consultation hvr-shutter-out-horizontal";
-                            p.setAttribute("id",c.id);
-                            p.onclick = function () {
-                                window.location.href='./detailsConsultation.html?id='+this.id;
-                            };
-                            p.innerHTML="<strong>"+c.medium.type+"</strong> : le "+c.dateDebut+" - "+c.medium.denomination;
-                            list.appendChild(p);
+                        var type = consultation.medium.type; 
+                        $('#champ-date').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);
+                        $('#champ-duree').html("<strong>Durée :&nbsp</strong>"+consultation.duree+ "minutes");
+                        $('#champ-medium-select').html("<strong>Médium sélectionné :&nbsp</strong>"+consultation.medium.denomination);
+                        $('#champ-medium-genre').html("<strong>Genre :&nbsp</strong>"+consultation.medium.genre);
+                        $('#champ-medium-type').html("<strong>Type :&nbsp</strong>"+type);
+                        $('#champ-medium-presentation').html("<strong>Présentation :&nbsp</strong>"+consultation.medium.presentation);
+                        
+                        if(type=="Spirite"){
+                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);
+                        } else if(type == "Astrologue") {
+                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);    
+                        } else {
+                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);
                         }
                     }
                 })
