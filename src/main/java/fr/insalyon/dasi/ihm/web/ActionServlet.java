@@ -8,12 +8,14 @@ import fr.insalyon.dasi.ihm.web.action.HistoriqueClientAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
+import fr.insalyon.dasi.ihm.web.action.ReserverConsultationAction;
 import fr.insalyon.dasi.ihm.web.serialisation.DetailsConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ReserverConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -78,6 +80,10 @@ public class ActionServlet extends HttpServlet {
                 case "detailsConsultation":
                     action = new DetailsConsultationAction();
                     serialisation = new DetailsConsultationSerialisation();
+                    break;
+                case "reserverConsultation":
+                    action = new ReserverConsultationAction();
+                    serialisation = new ReserverConsultationSerialisation();
                     break;
             }
         }

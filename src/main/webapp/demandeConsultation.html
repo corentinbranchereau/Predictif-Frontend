@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+ <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Demande de Consultation</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se Déconnecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    <body>
+        
+        <div class="title">
+            <h1>Demande de Consultation</h1>
+        </div>
+        <div id="notification"></div>
+        <div class="caroussel-container">
+               <button class="button" id="caroussel-precedent"><img src="images/arrow-left.png"/></button>
+              <div class="caroussel-sub-container">
+                  <div class="caroussel-nom">
+                      <div class="caroussel-nom-photo">
+                          <img id="caroussel-image"/>
+                      </div>
+                      <div class="caroussel-nom-text">
+                          <p id="medium-denomination"></p>
+                      <p id="medium-presentation"></p>
+                      </div>
+                  </div>
+                  <div class="caroussel-liste-cases">
+                      <div class="caroussel-column-cases">
+                          <div class="caroussel-self-case">
+                              <img id="caroussel-image-type"/>
+                              <p id="medium-type"></p>
+                          </div>
+                          <div class="caroussel-self-case">
+                              <p id="medium-support"></p>
+                          </div>
+                      </div>
+                      <div class="caroussel-column-cases">
+                          <div class="caroussel-self-case">
+                              <p id="medium-formation"></p>
+                          </div>
+                             <div class="caroussel-self-case">
+                                 <button id="reserver-consultation">Réserver ma Consultation !</button>
+                            </div>
+           
+                      </div>
+                  </div>
+              </div>
+              <button class="button" id="caroussel-suivant"><img src="images/arrow-right.png"/></button>   
+          </div>
+          
+          <script>
+             var idMedium=0;
+             var nbMedium=0;
+             var listeMediums;
+            $(document).ready( function () {
+                
+                 function apelAjax() { // Fonction appelée lors du clic sur le bouton
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'listerMediums'
+                            
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                       nbMedium=response.mediums.length;
+                       listeMediums=response.mediums;
+                       initMedium();
+
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always( function () { // Fonction toujours appelée
+                        
+                        
+                    });
+                    
+                };
+                
+                
+                 function ReserverConsultation() { // Fonction appelée lors du clic sur le bouton
+                    // Appel AJAX
+                    var id=listeMediums[idMedium].id;
+                    console.log("appel");
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'reserverConsultation',
+                            idMedium:id
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                       if(response.consultationValide===true){
+                           $("#notification").html("Votre Rendez-vous à bien été validé, votre Medium vous contactera d'ici peu");
+                       }else{
+                            $("#notification").html("Ce Medium est actuellement en Consultation, merci de réessayer plus tard");
+                       }
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always( function () { // Fonction toujours appelée
+                        
+                        
+                    });
+                };
+                
+                function initMedium(){
+                    nbMedium=listeMediums.length;
+                       $('#medium-denomination').html("Nom : "+listeMediums[idMedium].denomination);
+                       $('#medium-presentation').html(listeMediums[idMedium].presentation);
+                       $('#medium-type').html(listeMediums[idMedium].type);
+                       var source="images/profil"+idMedium/2+".png";
+                       var source2="images/"+listeMediums[idMedium].type+".png";
+                       $('#caroussel-image').attr('src',source);
+                       $('#caroussel-image-type').attr('src',source2);
+                       if(listeMediums[idMedium].type==="Spirite"){
+                           $('#medium-support').html("Support : "+ listeMediums[idMedium].support);
+                           $('#medium-formation').html("Formation : Institut de Divination");
+                       }
+                        if(listeMediums[idMedium].type==="Cartomancien"){
+                           $('#medium-support').html("Support :  cartes");
+                           $('#medium-formation').html("Formation : Master en Astrologie");
+                       }
+                        if(listeMediums[idMedium].type==="Astrologue"){
+                           $('#medium-support').html("Promotion :"+listeMediums[idMedium].promotion);
+                           $('#medium-formation').html("Formation : "+listeMediums[idMedium].formation);
+                       }
+                      
+                };
+                
+               $('#caroussel-suivant').on( 'click', function (){
+                    idMedium+=2;
+                    if(idMedium>=nbMedium){
+                        idMedium=0;
+                    }
+                     $(".caroussel-sub-container").animate({
+                        opacity:'0'
+                    },10);
+                    $(".caroussel-sub-container").animate({
+                        opacity:'1'
+                    },500);
+                    initMedium();
+                });
+                
+                $('#caroussel-precedent').on( 'click', function () { 
+                    idMedium-=2;
+                    
+                    if(idMedium<0){
+                        idMedium=nbMedium-2;
+                    }
+                    $(".caroussel-sub-container").animate({
+                        opacity:'0'
+                    },10);
+                    $(".caroussel-sub-container").animate({
+                        opacity:'1'
+                    },500);
+                    initMedium();
+                });
+                apelAjax();
+                $('#reserver-consultation').click(ReserverConsultation);
+                /*
+                $('#caroussel-suivant').click(function(){
+                    $(".caroussel-sub-container").animate({
+                        right:'-1500px'
+                    });
+                    $(".caroussel-sub-containerP").animate({
+                        left:'10vw',
+                        rigth:'10vw'
+                    });
+                });
+               
+                */
+            });
+        </script>
+    </body>
+</html>
