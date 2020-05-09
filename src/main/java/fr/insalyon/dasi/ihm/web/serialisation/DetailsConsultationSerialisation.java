@@ -26,11 +26,11 @@ public class DetailsConsultationSerialisation extends Serialisation{
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Consultation c = (Consultation)request.getAttribute("consultation");
-        Boolean com = (Boolean)request.getAttribute("commentaire");
+        boolean com = Boolean.parseBoolean(request.getParameter("commentaire"));
         
         JsonObject container = new JsonObject();
-        
-        if(c!=null){
+
+        if(c!=null) {
             //Sérialisation de la consultation
             JsonObject jsonConsultation = ConsultationToJson(c,com);
 
@@ -41,6 +41,7 @@ public class DetailsConsultationSerialisation extends Serialisation{
 
             container.add("consultation",jsonConsultation);
         }
+        
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();

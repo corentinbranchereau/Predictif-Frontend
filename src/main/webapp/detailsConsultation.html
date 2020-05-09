@@ -29,41 +29,61 @@
                 <h2>Détail de la consultation</h2>
             </div>
             
-            <div class="date-container">
-                <p id="champ-date"></p>
-                <p id="champ-duree"></p>
+            <div class="consultation-detail-subcontainer">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
+                    <p id="champ-date"></p>
+                </div>
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
+                    <p id="champ-duree"></p>
+                </div>
             </div>
             
-            <div class="medium-container">
-                <div class="medium-container-select">
+            <div class="consultation-detail-subcontainer">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
                     <p id="champ-medium-select"></p>
                 </div>
-                <div class="medium-container-genre">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
                     <p id="champ-medium-genre"></p>
                 </div>
-                <div class="medium-container-type">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
                     <p id="champ-medium-type"></p>
                 </div>
-                <div class="medium-container-presentation">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
                     <p id="champ-medium-presentation"></p>
                 </div>
-                <div class="medium-container-autre">
+                <div class="consultation-detail-medium-selfcase hvr-underline-from-center">
                     <p id="champ-medium-autre"></p>
                 </div>
             </div>
         </div>
         
-        <button type = "button" id="bouton-demande-consultation" class="hvr-forward" onclick="window.location.href='./index.html'">> Demande Consultation</button>
+        <button type = "button" id="bouton-retour" class="hvr-forward" onclick="window.location.href='./tableauBordClient.html'">> Retour</button>
         
-        <script>          
+        <script>         
+            // URL Parser --> Récupération des paramètres GET
+            var parseQueryString = function() {
+                var str = window.location.search;
+                var objURL = {};
+                str.replace(
+                    new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+                    function( $0, $1, $2, $3 ){
+                        objURL[ $1 ] = $3;
+                    }
+                );
+                return objURL;
+            };
+            
             function initConsultation() { // Fonction appelée lors du clic sur le bouton
                 // Appel AJAX
+                var idToFind=parseQueryString()["id"];
+                console.log(idToFind);
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
                         todo: 'detailsConsultation',
-                        commentaire: false
+                        commentaire: false,
+                        id: idToFind,
                     },
                     dataType: 'json'
                 })
@@ -82,11 +102,11 @@
                         $('#champ-medium-presentation').html("<strong>Présentation :&nbsp</strong>"+consultation.medium.presentation);
                         
                         if(type=="Spirite"){
-                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);
+                            $('#champ-medium-autre').html("Autre - <strong>Support :&nbsp</strong>"+consultation.medium.support);
                         } else if(type == "Astrologue") {
-                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);    
+                            $('#champ-medium-autre').html("Autres - <strong>Formation :&nbsp</strong>"+consultation.medium.formation+" ; <strong>Promotion :&nbsp</strong>"+consultation.medium.promotion);    
                         } else {
-                            $('#champ-medium-autre').html("<strong>Date :&nbsp</strong>"+consultation.dateDebut);
+                            $('#champ-medium-autre').html("Autre - <strong>/</strong>");
                         }
                     }
                 })

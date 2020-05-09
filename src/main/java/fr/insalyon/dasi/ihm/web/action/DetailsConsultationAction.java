@@ -24,14 +24,12 @@ public class DetailsConsultationAction extends Action {
         Service service = new Service();
         
         //Recuperation de l'id de la consultation
-        boolean commentaire = Boolean.parseBoolean(request.getParameter("commentaire"));
         int id = Integer.parseInt(request.getParameter("id"));
         
         //Appel des services Métiers
         Consultation consultation = service.obtenirConsultationParId(Long.valueOf(id));
         
         //Stockage des résultats dans les attributs de la requête
-        request.setAttribute("commentaire", commentaire);
         request.setAttribute("consultation", consultation);
     }
     
