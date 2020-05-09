@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
+import fr.insalyon.dasi.metier.modele.Medium;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +26,14 @@ public class ReserverConsultationSerialisation extends Serialisation {
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         Consultation consultation  = (Consultation) request.getAttribute("consultation");
-        
+        Client client=(Client)request.getAttribute("client");
+        Medium medium=(Medium)request.getAttribute("medium");
         JsonObject container = new JsonObject();
 
         Boolean consultationTrouvee = (consultation != null);
         container.addProperty("ConsultationValide", consultationTrouvee);
+        container.addProperty("client",client.getId());
+        container.addProperty("Medium",medium.getId());
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();

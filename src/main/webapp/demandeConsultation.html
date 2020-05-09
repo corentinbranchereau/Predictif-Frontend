@@ -23,7 +23,7 @@
         <div class="title">
             <h1>Demande de Consultation</h1>
         </div>
-        <div id="notification"></div>
+        <div class="notification-consultation"></div>
         <div class="caroussel-container">
                <button class="button" id="caroussel-precedent"><img src="images/arrow-left.png"/></button>
               <div class="caroussel-sub-container">
@@ -59,6 +59,7 @@
               </div>
               <button class="button" id="caroussel-suivant"><img src="images/arrow-right.png"/></button>   
           </div>
+        <div class="notification-consultation"></div>
           
           <script>
              var idMedium=0;
@@ -98,7 +99,6 @@
                  function ReserverConsultation() { // Fonction appelée lors du clic sur le bouton
                     // Appel AJAX
                     var id=listeMediums[idMedium].id;
-                    console.log("appel");
                     $.ajax({
                         url: './ActionServlet',
                         method: 'POST',
@@ -109,11 +109,13 @@
                         dataType: 'json'
                     })
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                       if(response.consultationValide===true){
-                           $("#notification").html("Votre Rendez-vous à bien été validé, votre Medium vous contactera d'ici peu");
+                       if(response.ConsultationValide==true){
+                           $(".notification-consultation").html("Votre Rendez-vous à bien été validé, votre Medium vous contactera d'ici peu");
+                           $(".notification-consultation").css({'background-color':"#99ff99"});
                        }else{
-                            $("#notification").html("Ce Medium est actuellement en Consultation, merci de réessayer plus tard");
-                       }
+                            $(".notification-consultation").html("Ce Medium est actuellement en Consultation, merci de réessayer plus tard");
+                            $(".notification-consultation").css({'background-color':"#ff9980"});
+                        }
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                         console.log('Error',error); // LOG dans Console Javascript
@@ -161,6 +163,7 @@
                         opacity:'1'
                     },500);
                     initMedium();
+                    $(".notification-consultation").html("");
                 });
                 
                 $('#caroussel-precedent').on( 'click', function () { 
@@ -176,6 +179,7 @@
                         opacity:'1'
                     },500);
                     initMedium();
+                    $(".notification-consultation").html("");
                 });
                 apelAjax();
                 $('#reserver-consultation').click(ReserverConsultation);

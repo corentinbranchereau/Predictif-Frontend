@@ -31,6 +31,8 @@ public class ReserverConsultationAction extends Action {
         
         
         request.setAttribute("consultation",consultation);
+        request.setAttribute("client",client);
+        request.setAttribute("medium",medium);
     }
     
 }
