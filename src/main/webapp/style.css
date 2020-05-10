@@ -618,6 +618,27 @@ header{
   left: 0;
   right: 0;
 }
+/*
+    -------------- EMPLOYE TABLEAU DE BORD ---------
+*/
+.next-consultation{
+    border:2px solid black;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    padding:10px;
+    font-size:20px;
+    justify-content: space-around;
+    
+}
+#button-next-consultation{
+    padding:10px;
+    background-color:#F54359;
+    color:white;
+    border:1px solid black;
+    margin:10px;
+}
+
 
 /*
     -------------- EMPLOYE DETAIL CONSULTATION ---------

@@ -3,14 +3,18 @@ package fr.insalyon.dasi.ihm.web;
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
+import fr.insalyon.dasi.ihm.web.action.DeconnecterAction;
 import fr.insalyon.dasi.ihm.web.action.DetailsConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.HistoriqueClientAction;
+import fr.insalyon.dasi.ihm.web.action.HistoriqueEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
 import fr.insalyon.dasi.ihm.web.action.ReserverConsultationAction;
+import fr.insalyon.dasi.ihm.web.serialisation.DeconnecterSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DetailsConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
@@ -61,6 +65,10 @@ public class ActionServlet extends HttpServlet {
                     action = new AuthentifierClientAction();
                     serialisation = new ProfilClientSerialisation();
                     break;
+                case "deconnecter":
+                    action=new DeconnecterAction();
+                    serialisation=new DeconnecterSerialisation();
+                    break;
                 case "inscrire":
                     action = new InscrireClientAction();
                     serialisation = new InscrireClientSerialisation();
@@ -76,6 +84,10 @@ public class ActionServlet extends HttpServlet {
                 case "historiqueClient":
                     action = new HistoriqueClientAction();
                     serialisation = new HistoriqueClientSerialisation();
+                    break;
+                case "historiqueEmploye":
+                    action = new HistoriqueEmployeAction();
+                    serialisation = new HistoriqueEmployeSerialisation();
                     break;
                 case "detailsConsultation":
                     action = new DetailsConsultationAction();

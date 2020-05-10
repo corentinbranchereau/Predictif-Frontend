@@ -115,10 +115,10 @@
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                     console.log('Error',error); // LOG dans Console Javascript
                     alert("Erreur lors de l'appel AJAX");
-                })
+                });
             };
                 
-            $(document).ready( function (){ //Appelé à la fin de la page HTML 
+            $(document).ready( function (){ //Appelé à la fin de la page HTML
                 initProfilAstral();
                 initConsultation();
             });

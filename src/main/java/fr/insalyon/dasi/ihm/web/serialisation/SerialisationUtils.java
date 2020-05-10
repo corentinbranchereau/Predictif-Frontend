@@ -36,7 +36,7 @@ public class SerialisationUtils {
         
         return jsonMedium;
     }
-    
+     
     public static JsonObject ConsultationToJson(Consultation c, boolean com){
         JsonObject jsonConsultation = new JsonObject();
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+ <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Demande de Consultation</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se Déconnecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    <body>
+        
+        <div class="title-emp">
+            <h1>Détail de Consultation</h1>
+        </div>
+        
+        <div class="empConsultation-container">
+            <div class="empConsultation-infoClient">
+                <h2 class="sous-titre">Informations du Client</h2>
+                    <p><strong>Nom :</strong> <span id="champ-nom"></span></p>
+                    <p><strong> Date de Naissance :</strong> <span id="champ-date"></span></p>
+                    <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
+                    <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
+                    <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
+                    <p id="last"><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
+            </div>
+            <div class="empConsultation-sub-container">
+                <div class="empConsultation-historique">
+                    <div class="empConsultation-historique-titre">
+                        <button>Précedent</button>
+                        <h2 class="sous-titre">Historique du Client</h2>
+                        <button>Suivant</button>
+                    </div>
+                    <div class="empConsultation-historique-date">
+                        <p>Le <span id="champ-dateConsultation"></span></p>
+                        <p> Medium: <span id="champ-medium"></span></p>
+                        <p> Durée:<span id="champ-duree"></span></p>
+                    </div>
+                    <div class="empConsultation-historique-commentaire">
+                        <p id="champ-commentaire">
+                        </p>
+                    </div>
+                </div>
+                <div class="empConsultation-begin">
+                    Consultation le: <span id="champ-beginConsultation"></span>
+                    <button> Commencer la consultation</button> 
+                </div>
+                <div class="empConsultation-enCours">
+                    <h2 class="sous-titre">Aide à la prédiction</h2>
+                </div>
+            </div>
+            <div class="empConsultation-commentaire">
+                
+            </div>
+        </div>
+        <script>
+            //Variables Globales
+            var Consultations; //liste des consultations
+            var idConsultation=0;
+            var idClient=null;
+            
+             // URL Parser --> Récupération des paramètres GET
+            var parseQueryString = function() {
+                var str = window.location.search;
+                var objURL = {};
+                str.replace(
+                    new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+                    function( $0, $1, $2, $3 ){
+                        objURL[ $1 ] = $3;
+                    }
+                );
+                return objURL;
+            };
+    
+            function initProfilAstral() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'profilAstral',
+                        idClient:idClient
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log(response);
+                    var profil = response.profilAstral;
+                    $('#champ-nom').html(response.prenom+" "+response.nom);
+                    $('#champ-date').html(response.dateNaissance);
+                    $('#champ-zodiaque').html(profil.zodiaque);
+                    $('#champ-chinois').html(profil.astroChinois);
+                    $('#champ-couleur').html(profil.couleur);
+                    $('#champ-totem').html(profil.animalTotem);
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
+            
+            function listeConsultation() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'historiqueClient'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    Consultations = response.consultations;
+                    console.log(Consultations);
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
+            
+            function detailConsultation() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                
+ 
+                console.log(idConsultation);
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'detailsConsultation',
+                        commentaire: true,
+                        id: idConsultation
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var consultation = response.consultation;
+                    console.log(consultation);
+                    if(consultation != null)
+                    {
+                        
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
+            
+             $(document).ready( function () {
+                 idClient=parseQueryString()["id"];
+                 console.log(idClient); 
+                 initProfilAstral();
+                 //listeConsultation();
+                 //detailConsultation();
+             });
+        </script>
+                 
+        
+    </body>
+</html>

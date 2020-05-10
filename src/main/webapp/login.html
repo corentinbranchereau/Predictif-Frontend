@@ -61,12 +61,15 @@
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
                         if (response.connexion) {
-                            //$('#notification').html("Connexion OK");  // Message pour le paragraphe de notification
-                            // TODO: afficher les informations du client dans la notification
-                            // Exemple: Connexion de Ada Lovelace (ID 1)
-                            var client = response.client;
-                            $('#notification').html("Connexion de " + client.prenom + " " + client.nom + " (ID " + client.id + ")");  // Message pour le paragraphe de notification
-                            window.location.href='./tableauBordClient.html';
+                            if(response.client!=null){
+                                var client = response.client;
+                                $('#notification').html("Connexion de " + client.prenom + " " + client.nom + " (ID " + client.id + ")");  // Message pour le paragraphe de notification
+                                window.location.href='./tableauBordClient.html';
+                            }else if(response.employe!=null){
+                                var employe = response.employe;
+                                $('#notification').html("Connexion de " + employe.prenom + " " + employe.nom + " (ID " + employe.id + ")");  // Message pour le paragraphe de notification
+                                window.location.href='./tableauBordEmploye.html';
+                            }
                         }
                         else {
                             $('#notification').html("Erreur de Connexion"); // Message pour le paragraphe de notification

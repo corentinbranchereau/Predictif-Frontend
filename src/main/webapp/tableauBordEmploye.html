@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Tableau de bord Employe</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" class = "hvr-shrink" onclick="window.location.href=">Statistiques</button>
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se déconnecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    <body>        
+        <div class="title-emp">
+            <h1 id="titre-a-changer">Tableau de Bord Employé</h1>
+        </div>
+        
+         <div class="tableau-client-container">
+
+            <div class="historique-client-container">
+                <div class="historique-client-header">
+                    <h2>Mon historique de consultation</h2>
+                </div>
+                <div class="historique-client-list" id="list-consultation"></div>
+            </div>
+        </div>
+        <div class="next-consultation">
+            <p>Prochaine consultation 
+            <span id="champ-date-consultation"></span>
+            </p>
+            <button class="hvr-forward" id="button-next-consultation"> > Commencer la consultation</button>
+         </div>
+        
+        
+        <script>
+            var idNextClient=null;
+    
+            function HistoriqueConsultationEmploye() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'historiqueEmploye'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var list = document.getElementById("list-consultation");
+                    var consultations = response.consultations;
+                    var employe=response.employe;
+                    $("#titre-a-changer").html("Bonjour, "+employe.prenom+" "+employe.nom);
+                    console.log(response);
+                    if(consultations.length==0)
+                    {
+                        var p = document.createElement('p');
+                        p.className="consultation";
+                        p.idName=0;
+                        p.innerHTML="<strong>Vous n'avez pas encore consulté. N'hésitez plus !</strong>";
+                        list.appendChild(p);
+                    }
+                    else
+                    {
+                        for(var i = 0; i<consultations.length; i++)
+                        {
+                            var c = consultations[i];
+                            
+                            if(c.estTerminee==true){
+                                var p = document.createElement('p');
+                            p.className="consultation hvr-shutter-out-horizontal";
+                            p.setAttribute("id",c.id);
+                            p.onclick = function () {
+                                window.location.href='./detailsConsultation.html?id='+this.id;
+                            };
+                            p.innerHTML="<strong>"+c.medium.denomination+"</strong> : le "+c.dateDebut+" - "+c.client.prenom+" "+c.client.nom;
+                            list.appendChild(p);
+                            }else{
+                                idNextClient=c.client.id;
+                                $('#champ-date-consultation').html("Le "+c.dateDebut+", avec "+c.client.prenom+" "+c.client.nom);
+                            }
+                        }
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
+            $(document).ready( function (){ //Appelé à la fin de la page HTML 
+                HistoriqueConsultationEmploye();
+                $('#button-next-consultation').on('click',function(){
+                    window.location.href='./ConsultationEmploye.html?id='+idNextClient;
+                });
+            });
+        </script>
+    </body>
+</html>

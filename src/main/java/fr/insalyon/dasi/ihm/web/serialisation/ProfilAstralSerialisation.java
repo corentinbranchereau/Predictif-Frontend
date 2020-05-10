@@ -30,12 +30,16 @@ public class ProfilAstralSerialisation extends Serialisation {
         
         ProfilAstral profil = (ProfilAstral)request.getAttribute("profilAstral");
         String prenom = (String)request.getAttribute("prenomClient");
+        String nom = (String)request.getAttribute("nomClient");
+        String date = (String)request.getAttribute("dateNaissance");
+        System.out.println("date naissance:"+date);
         
         JsonObject container = new JsonObject();
         
         //Sérialisation du prenom du client
         container.addProperty("prenom", prenom);
-        
+        container.addProperty("nom", nom);
+        container.addProperty("dateNaissance",date);
        
         JsonObject jsonProfil = new JsonObject();
             
