@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
 
         <meta charset="UTF-8">
-        <title>Demande de Consultation</title>
+        <title>Debuter la Consultation</title>
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
@@ -11,7 +11,7 @@
     <header>
          <div class="top-buttons">
             <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
-            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se Déconnecter</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter">Se Déconnecter</button>
           </div>
           <div class="container-header">
             <div class="logo-header"></div>
@@ -21,7 +21,7 @@
     <body>
         
         <div class="title-emp">
-            <h1>Détail de Consultation</h1>
+            <h1>Débuter la Consultation</h1>
         </div>
         
         <div class="empConsultation-container">
@@ -37,15 +37,16 @@
             <div class="empConsultation-sub-container">
                 <div class="empConsultation-historique">
                     <div class="empConsultation-historique-titre">
-                        <button>Précedent</button>
+                        <button id="button-precedent">Précedent</button>
                         <h2 class="sous-titre">Historique du Client</h2>
-                        <button>Suivant</button>
+                        <button id="button-suivant">Suivant</button>
                     </div>
                     <div class="empConsultation-historique-date">
                         <p>Le <span id="champ-dateConsultation"></span></p>
                         <p> Medium: <span id="champ-medium"></span></p>
                         <p> Durée:<span id="champ-duree"></span></p>
                     </div>
+                    <p id="text-commentaire">Commentaire : </p>
                     <div class="empConsultation-historique-commentaire">
                         <p id="champ-commentaire">
                         </p>
@@ -66,8 +67,9 @@
         <script>
             //Variables Globales
             var Consultations; //liste des consultations
-            var idConsultation=0;
             var idClient=null;
+            var viewedConsultation=0;
+            var nbConsultations;
             
              // URL Parser --> Récupération des paramètres GET
             var parseQueryString = function() {
@@ -84,17 +86,17 @@
     
             function initProfilAstral() { // Fonction appelée lors du clic sur le bouton
                 // Appel AJAX
+                let id=idClient;
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
                         todo: 'profilAstral',
-                        idClient:idClient
+                        idClient:id
                     },
                     dataType: 'json'
                 })
                 .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    console.log(response);
                     var profil = response.profilAstral;
                     $('#champ-nom').html(response.prenom+" "+response.nom);
                     $('#champ-date').html(response.dateNaissance);
@@ -116,13 +118,16 @@
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'historiqueClient'
+                        todo: 'historiqueClient',
+                        idClient:idClient,
+                        commentaire:true
                     },
                     dataType: 'json'
                 })
                 .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                     Consultations = response.consultations;
-                    console.log(Consultations);
+                    nbConsultations=Consultations.length;
+                    AfficherConsultation();
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                     console.log('Error',error); // LOG dans Console Javascript
@@ -130,29 +135,31 @@
                 });
             };
             
+            function AfficherConsultation(){
+                if(nbConsultations!=0){
+                        $('#champ-dateConsultation').html(Consultations[viewedConsultation].dateDebut);
+                        $('#champ-medium').html(Consultations[viewedConsultation].medium.denomination);
+                        $('#champ-duree').html(" "+Consultations[viewedConsultation].duree+" min");
+                        $('#champ-commentaire').html("\" "+Consultations[viewedConsultation].commentaire+" \"");
+                    }
+                else{
+                    $('#champ-commentaire').html("Ce client n'a pas d'historique de Consultation");
+                }
+            }
             
-            function detailConsultation() { // Fonction appelée lors du clic sur le bouton
-                // Appel AJAX
-                
- 
-                console.log(idConsultation);
+            
+            
+            function Deconnecter(){
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'detailsConsultation',
-                        commentaire: true,
-                        id: idConsultation
+                        todo: 'deconnecter'
                     },
                     dataType: 'json'
                 })
                 .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    var consultation = response.consultation;
-                    console.log(consultation);
-                    if(consultation != null)
-                    {
-                        
-                    }
+                   window.location.href='./login.html';
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                     console.log('Error',error); // LOG dans Console Javascript
@@ -160,13 +167,27 @@
                 });
             };
             
+            function ConsultationSuivante(page){
+                console.log(page);
+                if(nbConsultations!=0){
+                    viewedConsultation+=page;
+                    if(viewedConsultation>=nbConsultations){
+                        viewedConsultation=0;
+                    }
+                    if(viewedConsultation<0){
+                        viewedConsultation=nbConsultations-1;
+                    }
+                    AfficherConsultation;
+                }
+            }
             
              $(document).ready( function () {
                  idClient=parseQueryString()["id"];
-                 console.log(idClient); 
                  initProfilAstral();
-                 //listeConsultation();
-                 //detailConsultation();
+                 listeConsultation();
+                 $('#button-deconnecter').on('click',Deconnecter);
+                 $('#button-suivant').on('click',function(){ConsultationSuivante(1);});
+                 $('#button-precedent').on('click',function(){ConsultationSuivante(-1);});
              });
         </script>
                  

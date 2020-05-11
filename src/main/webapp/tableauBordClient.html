@@ -12,7 +12,7 @@
     <header>
          <div class="top-buttons">
             <button type="button" class = "hvr-shrink" onclick="window.location.href='./demandeConsultation.html'">Demande de consultation</button>
-            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se déconnecter</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter">Se déconnecter</button>
           </div>
           <div class="container-header">
             <div class="logo-header"></div>
@@ -117,10 +117,30 @@
                     alert("Erreur lors de l'appel AJAX");
                 });
             };
+            
+            function Deconnecter(){
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'deconnecter'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                   window.location.href='./login.html';
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
                 
             $(document).ready( function (){ //Appelé à la fin de la page HTML
                 initProfilAstral();
                 initConsultation();
+                $('#button-deconnecter').on('click',Deconnecter);
             });
         </script>
         

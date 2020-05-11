@@ -18,20 +18,22 @@ public class ProfilAstralAction extends Action  {
         //Instanciation de la classe de service
         Service service = new Service();
         Client client=null;
+        Long id=new Long(request.getParameter("idClient"));
         //Recuperation du client
-        if(request.getAttribute("idClient")!=null){
-            client = (Client)service.obtenirUtilisateurParId((Long)request.getAttribute("idClient"));
+        if(id!=null){
+            client = (Client)service.obtenirUtilisateurParId(id);
         }else{
             HttpSession session = request.getSession();
             client = (Client)service.obtenirUtilisateurParId((Long)session.getAttribute("idClient"));
         }
-        
+        System.out.println("Client final : "+client);
         //Stockage des résultats dans les attributs de la requête
         request.setAttribute("profilAstral", client.getProfilAstral());
         request.setAttribute("prenomClient", client.getPrenom());
         request.setAttribute("nomClient", client.getNom());
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");  
-        String date = dateFormat.format(client.getDateNaissance());  
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+        String date = dateFormat.format(client.getDateNaissance()); 
+        System.out.println("date:"+date);
         request.setAttribute("dateNaissance",date);
     }
     

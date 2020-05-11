@@ -29,6 +29,13 @@ public class HistoriqueClientSerialisation extends Serialisation{
         
         List<Consultation> historiqueClient = (List<Consultation>)request.getAttribute("historique");
         
+        String paramCommentaire=request.getParameter("commentaire");
+        boolean com=false;
+        if(paramCommentaire!=null){
+           com = Boolean.parseBoolean(paramCommentaire);
+        }
+        
+        
         JsonObject container = new JsonObject();
         
         JsonArray jsonListeConsultation = new JsonArray();
@@ -37,7 +44,7 @@ public class HistoriqueClientSerialisation extends Serialisation{
             for(Consultation c : historiqueClient){
                 if(c.getEstTerminee()){
                     //Sérialisation de la consultation
-                    JsonObject jsonConsultation = ConsultationToJson(c,false);
+                    JsonObject jsonConsultation = ConsultationToJson(c,com);
 
                     //Sérialisation du médium associé
                     Medium m = c.getMedium();

@@ -706,9 +706,29 @@ header{
     display:flex;
     justify-content: space-between;
 }
+.empConsultation-historique-titre button{
+    height: 40px;
+    width:80px;
+    border:1px solid black;
+    border-radius:10px;
+}
 .empConsultation-historique-date{
       display:flex;
     justify-content: space-between;  
+}
+
+.empConsultation-historique-commentaire{
+    display:flex;
+    text-align:center;
+    align-items:center;
+    justify-content: center;
+    height: 100%;
+    font-style:italic;
+}
+
+#text-commentaire{
+    margin:10px;
+    font-weight:bold;
 }
 .empConsultation-begin{
     display:flex;

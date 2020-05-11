@@ -11,7 +11,7 @@
     <header>
          <div class="top-buttons">
             <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
-            <button type="button" class = "hvr-shrink" onclick="window.location.href='./login.html'">Se Déconnecter</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter">Se Déconnecter</button>
           </div>
           <div class="container-header">
             <div class="logo-header"></div>
@@ -65,7 +65,7 @@
              var idMedium=0;
              var nbMedium=0;
              var listeMediums;
-            $(document).ready( function () {
+           
                 
                  function apelAjax() { // Fonction appelée lors du clic sur le bouton
                     // Appel AJAX
@@ -95,6 +95,23 @@
                     
                 };
                 
+                function Deconnecter(){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'deconnecter'
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                       window.location.href='./login.html';
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    });
+                };
                 
                  function ReserverConsultation() { // Fonction appelée lors du clic sur le bouton
                     // Appel AJAX
@@ -132,7 +149,7 @@
                        $('#medium-denomination').html("Nom : "+listeMediums[idMedium].denomination);
                        $('#medium-presentation').html(listeMediums[idMedium].presentation);
                        $('#medium-type').html(listeMediums[idMedium].type);
-                       var source="images/profil"+idMedium/2+".png";
+                       var source="images/profil"+idMedium+".png";
                        var source2="images/"+listeMediums[idMedium].type+".png";
                        $('#caroussel-image').attr('src',source);
                        $('#caroussel-image-type').attr('src',source2);
@@ -152,7 +169,7 @@
                 };
                 
                $('#caroussel-suivant').on( 'click', function (){
-                    idMedium+=2;
+                    idMedium++;
                     if(idMedium>=nbMedium){
                         idMedium=0;
                     }
@@ -167,7 +184,7 @@
                 });
                 
                 $('#caroussel-precedent').on( 'click', function () { 
-                    idMedium-=2;
+                    idMedium--;
                     
                     if(idMedium<0){
                         idMedium=nbMedium-2;
@@ -181,21 +198,14 @@
                     initMedium();
                     $(".notification-consultation").html("");
                 });
-                apelAjax();
-                $('#reserver-consultation').click(ReserverConsultation);
-                /*
-                $('#caroussel-suivant').click(function(){
-                    $(".caroussel-sub-container").animate({
-                        right:'-1500px'
-                    });
-                    $(".caroussel-sub-containerP").animate({
-                        left:'10vw',
-                        rigth:'10vw'
-                    });
+                
+                
+                 $(document).ready( function () {
+                    apelAjax();
+                    $('#reserver-consultation').click(ReserverConsultation);
+                    $('#button-deconnecter').on('click',Deconnecter);
+                   
                 });
-               
-                */
-            });
         </script>
     </body>
 </html>

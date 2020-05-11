@@ -99,7 +99,7 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                        $('#medium-denomination').html("Nom : "+listeMediums[idMedium].denomination);
                        $('#medium-presentation').html(listeMediums[idMedium].presentation);
                        $('#medium-type').html(listeMediums[idMedium].type);
-                       var source="images/profil"+idMedium/2+".png";
+                       var source="images/profil"+idMedium+".png";
                        var source2="images/"+listeMediums[idMedium].type+".png";
                        $('#caroussel-image').attr('src',source);
                        $('#caroussel-image-type').attr('src',source2);
@@ -119,9 +119,9 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                 };
                 
                $('#caroussel-suivant').on( 'click', function (){
-                    idMedium+=2;
-                    idMediumPrecedent+=2;
-                    idMediumSuivant+=2;
+                    idMedium++;
+                    idMediumPrecedent++;
+                    idMediumSuivant++;
                     if(idMedium>=nbMedium){
                         idMedium=0;
                     }
@@ -141,9 +141,9 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                 });
                 
                 $('#caroussel-precedent').on( 'click', function () { 
-                    idMedium-=2;
-                    idMediumPrecedent-=2;
-                    idMediumSuivant-=2;
+                    idMedium--;
+                    idMediumPrecedent--;
+                    idMediumSuivant--;
                     if(idMedium<0){
                         idMedium=nbMedium-2;
                     }

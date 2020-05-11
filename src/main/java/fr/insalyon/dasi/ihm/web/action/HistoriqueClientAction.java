@@ -21,8 +21,15 @@ public class HistoriqueClientAction extends Action {
         Service service = new Service();
         
         //Recuperation du client
-        HttpSession session = request.getSession();
-        Client client = (Client)service.obtenirUtilisateurParId((Long)session.getAttribute("idClient"));
+       Client client=null;
+        Long id=new Long(request.getParameter("idClient"));
+        //Recuperation du client
+        if(id!=null){
+            client = (Client)service.obtenirUtilisateurParId(id);
+        }else{
+            HttpSession session = request.getSession();
+            client = (Client)service.obtenirUtilisateurParId((Long)session.getAttribute("idClient"));
+        }
         
         //Appel des services Métiers
         List<Consultation> historiqueClient = service.HistoriqueClientTrié(client);
