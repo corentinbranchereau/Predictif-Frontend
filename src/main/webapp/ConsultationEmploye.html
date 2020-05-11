@@ -10,7 +10,7 @@
     
     <header>
          <div class="top-buttons">
-            <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordClient.html'">Retour au tableau de bord</button>
+            <button type="button" class = "hvr-shrink" id="button-retour" onclick="window.location.href='./tableauBordEmploye.html'">Retour au tableau de bord</button>
             <button type="button" class = "hvr-shrink" id="button-deconnecter">Se Déconnecter</button>
           </div>
           <div class="container-header">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="empConsultation-begin">
                     Consultation le: <span id="champ-beginConsultation"></span>
-                    <button> Commencer la consultation</button> 
+                    <button id="button-commencer-consultation"> Commencer la consultation</button> 
                 </div>
                 <div class="empConsultation-enCours">
                     <h2 class="sous-titre">Aide à la prédiction</h2>
@@ -68,6 +68,7 @@
             //Variables Globales
             var Consultations; //liste des consultations
             var idClient=null;
+            var idConsultation=null;
             var viewedConsultation=0;
             var nbConsultations;
             
@@ -135,6 +136,32 @@
                 });
             };
             
+            function detailConsultation() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'detailsConsultation',
+                        commentaire: false,
+                        id:idConsultation
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var consultation = response.consultation;
+                    console.log(consultation);
+                    if(consultation != null)
+                    {
+                       $('#champ-beginConsultation').html(consultation.dateDebut);
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+            
             function AfficherConsultation(){
                 if(nbConsultations!=0){
                         $('#champ-dateConsultation').html(Consultations[viewedConsultation].dateDebut);
@@ -147,6 +174,52 @@
                 }
             }
             
+            function CommencerConsultation(){
+              $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'commencerConsultation',
+                        id:idConsultation
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                   console.log(response);
+                    AffichageMode2();
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });  
+            };
+            
+            function AffichageMode1(){
+                $('.empConsultation-enCours').css({display:'none'});
+                $('.empConsultation-begin').css({
+                    display:'flex',
+                    'justify-content': 'space-between',
+                    padding:'20px',
+                    border:'2px solid black',
+                    width:'100%'
+                });
+                $('#button-retour').html("Retour au Tableau de Bord");
+                $('#button-retour').attr("onclick","window.location.href='./tableauBordEmploye.html'");
+            }
+            
+            function AffichageMode2(){
+                $('.empConsultation-begin').css({display:'none'});
+                $('.empConsultation-enCours').css({
+                    display:'flex',
+                    'flex-direction':'column',
+                    'justify-content': 'space-between',
+                    padding:'20px',
+                    border:'2px solid black',
+                    width:'100%'
+                });
+                $('#button-retour').html("Annuler le début de consultation");
+                $('#button-retour').attr("onclick","AffichageMode1()");
+            }
             
             
             function Deconnecter(){
@@ -183,11 +256,15 @@
             
              $(document).ready( function () {
                  idClient=parseQueryString()["id"];
+                 idConsultation=parseQueryString()["consultation"];
+                 parseQueryString()["date"];
                  initProfilAstral();
                  listeConsultation();
+                 detailConsultation();
                  $('#button-deconnecter').on('click',Deconnecter);
                  $('#button-suivant').on('click',function(){ConsultationSuivante(1);});
                  $('#button-precedent').on('click',function(){ConsultationSuivante(-1);});
+                 $('#button-commencer-consultation').on('click',CommencerConsultation);
              });
         </script>
                  
