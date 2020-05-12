@@ -12,6 +12,7 @@ import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
 import fr.insalyon.dasi.ihm.web.action.ReserverConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.StatistiquesAction;
 import fr.insalyon.dasi.ihm.web.serialisation.CommencerConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DeconnecterSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DetailsConsultationSerialisation;
@@ -23,6 +24,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ReserverConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.StatistiquesSerialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,8 +62,6 @@ public class ActionServlet extends HttpServlet {
 
         Action action = null;
         Serialisation serialisation = null;
-        
-        System.out.println(todo);
 
         if (todo != null) {
             switch (todo) {
@@ -104,6 +104,10 @@ public class ActionServlet extends HttpServlet {
                 case "commencerConsultation":
                     action = new CommencerConsultationAction();
                     serialisation = new CommencerConsultationSerialisation();
+                    break;
+                case "statistiques":
+                    action = new StatistiquesAction();
+                    serialisation = new StatistiquesSerialisation();
                     break;
             }
         }

@@ -751,3 +751,142 @@ header{
     border:2px solid black;
     width:100%;
 }
+
+/*
+    -------------- STATISTIQUES ---------
+*/
+
+.page-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+}
+
+.left-container{
+    display:flex;
+    order:1;
+    flex:1.35;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    margin-right:30px;
+}
+
+.bilan-horaire-container{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items:center;
+    width: 100%;
+    border: 2px solid black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.bilan-horaire-container .bilan-horaire-header{
+    width:80%;
+}
+
+.bilan-horaire-container .bilan-horaire-header h2{
+    text-align: center;
+    font-weight: bold;
+    padding:15px;
+    border-bottom: 2px solid black;
+    margin-bottom:10px;
+}
+
+.bilan-horaire-contents{
+    margin:10px;
+}
+
+.nbre-clients-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border: 2px solid black;
+    margin:10px;
+    padding:10px;
+}
+
+.nbre-clients-container .nbre-clients-header{
+    width: 80%;
+}
+
+.nbre-clients-container .nbre-clients-header h2{
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.nbre-clients-subcontainer{
+    display:flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+    border:2px solid black;
+    margin: 10px;
+}
+
+.nbre-clients-selfcase{
+    width:100%;
+    height:100%;
+    border:1px solid black;
+    text-align:center;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    padding-top: 12px;
+    padding-bottom :12px;
+    background: #e1e1e1;
+}
+
+.medium-consultes-container{
+    display: flex;
+    order:2;
+    flex:1;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    margin-left:30px;
+    padding:10px;
+}
+
+.medium-consultes-container .medium-consultes-header{
+    width:80%;
+}
+
+.medium-consultes-container .medium-consultes-header h2{
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.medium-consultes-subcontainer{
+    display:flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+    border:2px solid black;
+    margin: 10px;
+}
+
+.medium-consultes-selfcase{
+    width:100%;
+    height:100%;
+    border:1px solid black;
+    text-align:center;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    padding-top: 12px;
+    padding-bottom :12px;
+    background: #e1e1e1;
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <title>Statistiques</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    
+    <header>
+         <div class="top-buttons">
+            <button type="button" class = "hvr-shrink" onclick="window.location.href='./tableauBordEmploye.html'">Retour au tableau de bord</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter">Se déconnecter</button>
+          </div>
+          <div class="container-header">
+            <div class="logo-header"></div>
+            <h1>PREDICT'IF</h1>
+          </div>
+    </header>
+    <body>        
+        <div class="title-emp">
+            <h1 id="title-header">Statistiques</h1>
+        </div>
+        
+        <div class="page-container">
+            <div class="left-container">
+                <div class="bilan-horaire-container">
+                    <div class = "bilan-horaire-header">
+                        <h2>Mon bilan horaire :</h2>
+                    </div>
+
+                    <div class ="bilan-horaire-contents">
+                        <p id="champ-bilan-horaire"></p>
+                    </div>
+                </div>
+
+                 <div class ="nbre-clients-container">
+                    <div class = "nbre-clients-header">
+                         <h2>Nombre de clients par employé</h2>
+                    </div>
+
+                    <div class = "nbre-clients-subcontainer" id="list-employes">
+                        
+                    </div>
+                 </div>
+            </div>
+
+            <div class ="medium-consultes-container">
+                <div class="medium-consultes-header">
+                    <h2>Médiums les plus consultés</h2>
+                </div>
+
+                <div class="medium-consultes-subcontainer" id="list-mediums">
+                   
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function Statistiques() { // Fonction appelée lors du clic sur le bouton
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'statistiques'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var listMediums = document.getElementById("list-mediums");
+                    var listEmployes = document.getElementById("list-employes");
+                    
+                    console.log(response);
+        
+                    var statsMediums = response.mediums;
+                    var statsEmployes = response.employes;
+                    var nbConsultations = response.nbConsultations;
+                    var nbHeures = response.nbHeures;
+                   
+                    $('#champ-bilan-horaire').html(nbConsultations+" consultations : "+nbHeures+ " minutes ");
+                    
+                    if(statsMediums.length==0)
+                    {
+                        var div = document.createElement('div');
+                        div.className="medium-consultes-selfcase hvr-underline-from-center";
+                        var p = document.createElement('p');
+                        p.innerHTML="Aucun medium n'est enregistré";
+                        div.appendChild(p);
+                        listMediums.appendChild(div);
+                    }
+                    else
+                    {
+                        for(var i = 0; i<statsMediums.length; i++)
+                        {
+                            var m = statsMediums[i];
+                            var div = document.createElement('div');
+                            div.className="medium-consultes-selfcase hvr-underline-from-center";
+                            var p = document.createElement('p');
+                            p.innerHTML=m.denomination+" : "+m.value+" consultation(s) ";
+                            div.appendChild(p);
+                            listMediums.appendChild(div);
+                        }    
+                    }
+                    
+                    if(statsEmployes.length==0)
+                    {
+                        var div = document.createElement('div');
+                        div.className="nbre-clients-selfcase hvr-underline-from-center";
+                        var p = document.createElement('p');
+                        p.innerHTML= "Aucun employé n'est enregistré.";
+                        div.appendChild(p);
+                        listEmployes.appendChild(div);
+                    }
+                    else
+                    {
+                        for(var i = 0; i<statsEmployes.length; i++)
+                        {
+                            var e = statsEmployes[i];
+                            var div = document.createElement('div');
+                            div.className="nbre-clients-selfcase hvr-underline-from-center";
+                            var p = document.createElement('p');
+                            p.innerHTML=e.prenom+" "+e.nom+" : "+e.value+" consultation(s) ";
+                            div.appendChild(p);
+                            listEmployes.appendChild(div);   
+                        }
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            };
+        
+            function Deconnecter(){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'deconnecter'
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                       window.location.href='./login.html';
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    });
+            };
+                
+            $(document).ready( function (){ //Appelé à la fin de la page HTML 
+                Statistiques();
+                $('#button-deconnecter').on('click',Deconnecter);
+            });
+        </script>
+    </body>
+</html>
