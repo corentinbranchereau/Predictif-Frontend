@@ -22,9 +22,10 @@ public class HistoriqueClientAction extends Action {
         
         //Recuperation du client
         Client client=null;
-        Long id=new Long(request.getParameter("idClient"));
+        
         //Recuperation du client
-        if(id!=null){
+        if(request.getParameter("idClient")!=null){
+             Long id=new Long(request.getParameter("idClient"));
             client = (Client)service.obtenirUtilisateurParId(id);
         }else{
             HttpSession session = request.getSession();

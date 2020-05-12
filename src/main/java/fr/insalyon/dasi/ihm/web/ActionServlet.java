@@ -60,6 +60,8 @@ public class ActionServlet extends HttpServlet {
 
         Action action = null;
         Serialisation serialisation = null;
+        
+        System.out.println(todo);
 
         if (todo != null) {
             switch (todo) {

@@ -18,14 +18,16 @@ public class ProfilAstralAction extends Action  {
         //Instanciation de la classe de service
         Service service = new Service();
         Client client=null;
-        Long id=new Long(request.getParameter("idClient"));
+        
         //Recuperation du client
-        if(id!=null){
+        if(request.getParameter("idClient")!=null){
+            Long id=new Long(request.getParameter("idClient"));
             client = (Client)service.obtenirUtilisateurParId(id);
         }else{
             HttpSession session = request.getSession();
             client = (Client)service.obtenirUtilisateurParId((Long)session.getAttribute("idClient"));
         }
+        
         System.out.println("Client final : "+client);
         //Stockage des résultats dans les attributs de la requête
         request.setAttribute("profilAstral", client.getProfilAstral());
