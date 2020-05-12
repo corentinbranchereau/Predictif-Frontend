@@ -11,7 +11,7 @@
     <header>
          <div class="top-buttons">
             <button type="button" class = "hvr-shrink" id="button-retour" onclick="window.location.href='./tableauBordEmploye.html'">Retour au tableau de bord</button>
-            <button type="button" class = "hvr-shrink" id="button-deconnecter">Se Déconnecter</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter" onclick='AffichageMode2()'>Commencer la consultation</button>
           </div>
           <div class="container-header">
             <div class="logo-header"></div>
@@ -25,15 +25,24 @@
         </div>
         
         <div class="empConsultation-container">
-            <div class="empConsultation-infoClient">
-                <h2 class="sous-titre">Informations du Client</h2>
-                    <p><strong>Nom :</strong> <span id="champ-nom"></span></p>
-                    <p><strong> Date de Naissance :</strong> <span id="champ-date"></span></p>
-                    <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
-                    <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
-                    <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
-                    <p id="last"><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
-            </div>
+           <div class="container-column"> 
+                <div class="empConsultation-infoClient">
+                     <h2 class="sous-titre">Médium à Incarner</h2>
+                        <p><strong> Nom :</strong> <span id="champ-nom-medium"></span></p>
+                        <p><strong>type:</strong> <span id="champ-type-medium"></span></p>
+                        <p class="last"><strong> support :</strong> <span id="champ-support-medium"></span></p>
+                </div>
+                <div class="empConsultation-infoClient">
+                    <h2 class="sous-titre">Informations du Client</h2>
+                        <p><strong>Nom :</strong> <span id="champ-nom"></span></p>
+                        <p><strong> Date de Naissance :</strong> <span id="champ-date"></span></p>
+                        <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
+                        <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
+                        <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
+                        <p class="last"><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
+                </div>
+               
+           </div>
             <div class="empConsultation-sub-container">
                 <div class="empConsultation-historique">
                     <div class="empConsultation-historique-titre">
@@ -42,9 +51,9 @@
                         <button id="button-suivant">Suivant</button>
                     </div>
                     <div class="empConsultation-historique-date">
-                        <p>Le <span id="champ-dateConsultation"></span></p>
-                        <p> Medium: <span id="champ-medium"></span></p>
-                        <p> Durée:<span id="champ-duree"></span></p>
+                        <p>Le <span class="champ-dateConsultation"></span></p>
+                        <p> Medium: <span class="champ-medium"></span></p>
+                        <p> Durée:<span class="champ-duree"></span></p>
                     </div>
                     <p id="text-commentaire">Commentaire : </p>
                     <div class="empConsultation-historique-commentaire">
@@ -58,19 +67,43 @@
                 </div>
                 <div class="empConsultation-enCours">
                     <h2 class="sous-titre">Aide à la prédiction</h2>
-                    <div class="range-container">
-                     Amour :  1
-                     <input type="range" id="amour-range" name="amour" min="1" max="4"/>4 
-                     Travail :  1
-                     <input type="range" id="travail-range" name="travail" min="1" max="4"/>4 
-                     Sante :  1
-                     <input type="range" id="sante-range" name="sante" min="1" max="4"/>4 
+                    <div class="prediction-container">
+                        <div class="range-container">
+                            Amour : 
+                            <div>1
+                            <input type="range" id="amour-range" name="amour" min="1" max="4"/>4 
+                            </div>
+
+                            Travail :
+                            <div>1
+                            <input type="range" id="travail-range" name="travail" min="1" max="4"/>4 
+                            </div>
+                            Sante : 
+                            <div>1
+                            <input type="range" id="sante-range" name="sante" min="1" max="4"/>4 
+                            </div>
+                            <button id="button-prediction">Prédiction</button>
+                         </div>
+                        <div class="predictions">
+                            <h3>Amour :</h3>
+                            <p id="champ-amour"></p><br/>
+                            <h3>Travail :</h3>
+                            <p id="champ-travail"></p><br/>
+                            <h3>Santé :</h3>
+                            <p id="champ-sante"></p>
+                        </div>
                     </div>
                     
                 </div>
             </div>
             <div class="empConsultation-commentaire">
-                
+                <h2 class="sous-titre">Laisser un commentaire</h2>
+                    <div class="empConsultation-historique-date">
+                        <p>Le <span class="champ-dateConsultation"></span></p>
+                        <p> Medium: <span class="champ-medium"></span></p>
+                        <p> Durée:<span class="champ-duree"></span></p>
+                    </div>
+                <textarea id="champ-fin-commentaire" placeholder="Laissez votre commentaire ici"></textarea>
             </div>
         </div>
         <script>
@@ -80,6 +113,10 @@
             var idConsultation=null;
             var viewedConsultation=0;
             var nbConsultations;
+            var animal;
+            var couleur;
+            var debutConsultation;
+            var FinConsultation;
             
              // URL Parser --> Récupération des paramètres GET
             var parseQueryString = function() {
@@ -113,6 +150,8 @@
                     $('#champ-zodiaque').html(profil.zodiaque);
                     $('#champ-chinois').html(profil.astroChinois);
                     $('#champ-couleur').html(profil.couleur);
+                    couleur=profil.couleur;
+                    animal=profil.animalTotem;
                     $('#champ-totem').html(profil.animalTotem);
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -163,6 +202,9 @@
                     if(consultation != null)
                     {
                        $('#champ-beginConsultation').html(consultation.dateDebut);
+                       $('#champ-nom-medium').html(consultation.medium.denomination);
+                       $('#champ-type-medium').html(consultation.medium.type);
+                       $('#champ-support-medium').html(consultation.medium.support);
                     }
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -173,9 +215,9 @@
             
             function AfficherConsultation(){
                 if(nbConsultations!=0){
-                        $('#champ-dateConsultation').html(Consultations[viewedConsultation].dateDebut);
-                        $('#champ-medium').html(Consultations[viewedConsultation].medium.denomination);
-                        $('#champ-duree').html(" "+Consultations[viewedConsultation].duree+" min");
+                        $('.champ-dateConsultation').html(Consultations[viewedConsultation].dateDebut);
+                        $('.champ-medium').html(Consultations[viewedConsultation].medium.denomination);
+                        $('.champ-duree').html(" "+Consultations[viewedConsultation].duree+" min");
                         $('#champ-commentaire').html("\" "+Consultations[viewedConsultation].commentaire+" \"");
                     }
                 else{
@@ -203,6 +245,36 @@
                 });  
             };
             
+            function TerminerConsultation(){
+                
+            }
+            
+            function ObtenirPrediction(){
+              $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'obtenirPrediction',
+                        couleur:couleur,
+                        animal:animal,
+                        amour:$('#amour-range').val(),
+                        travail:$('#travail-range').val(),
+                        sante:$('#sante-range').val()
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                   $('#champ-amour').html(response.amour);
+                   $('#champ-travail').html(response.travail);
+                   $('#champ-sante').html(response.sante);
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });  
+        
+            };
+            
             function AffichageMode1(){
                 $('.empConsultation-enCours').css({display:'none'});
                 $('.empConsultation-begin').css({
@@ -214,10 +286,14 @@
                 });
                 $('#button-retour').html("Retour au Tableau de Bord");
                 $('#button-retour').attr("onclick","window.location.href='./tableauBordEmploye.html'");
+                 $('#button-deconnecter').html("Commencer La consultation");
+                $('#button-deconnecter').attr("onclick","AffichageMode2()");
             }
             
             function AffichageMode2(){
                 $('.empConsultation-begin').css({display:'none'});
+                $('.empConsultation-sub-container').css({display:'flex'});
+                $('.empConsultation-commentaire').css({display:'none'});
                 $('.empConsultation-enCours').css({
                     display:'flex',
                     'flex-direction':'column',
@@ -228,26 +304,27 @@
                 });
                 $('#button-retour').html("Annuler le début de consultation");
                 $('#button-retour').attr("onclick","AffichageMode1()");
+                $('#button-deconnecter').html("Terminer la consultation");
+                $('#button-deconnecter').attr("onclick","AffichageMode3()");
+            }
+            
+             function AffichageMode3(){
+                $('.empConsultation-sub-container').css({display:'none'});
+                $('.empConsultation-commentaire').css({
+                    display:'flex',
+                    'flex-direction':'column',
+                    margin:'5vw',
+                    padding:'20px',
+                    border:'2px solid black',
+                    width:'60%'
+                });
+                $('#button-retour').html("Retour à la consultation");
+                $('#button-retour').attr("onclick","AffichageMode2()");
+                $('#button-deconnecter').html("Valider et aller à l'Accueil");
+                $('#button-deconnecter').attr("onclick","window.location.href='./tableauBordEmploye.html'");
             }
             
             
-            function Deconnecter(){
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'deconnecter'
-                    },
-                    dataType: 'json'
-                })
-                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                   window.location.href='./login.html';
-                })
-                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error',error); // LOG dans Console Javascript
-                    alert("Erreur lors de l'appel AJAX");
-                });
-            };
             
             function ConsultationSuivante(page){
                 console.log(page);
@@ -270,8 +347,7 @@
                  initProfilAstral();
                  listeConsultation();
                  detailConsultation();
-                 AffichageMode2();
-                 $('#button-deconnecter').on('click',Deconnecter);
+                 $('#button-prediction').on('click',ObtenirPrediction);
                  $('#button-suivant').on('click',function(){ConsultationSuivante(1);});
                  $('#button-precedent').on('click',function(){ConsultationSuivante(-1);});
                  $('#button-commencer-consultation').on('click',CommencerConsultation);

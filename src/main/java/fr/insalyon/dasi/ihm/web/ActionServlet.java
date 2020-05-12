@@ -10,6 +10,7 @@ import fr.insalyon.dasi.ihm.web.action.HistoriqueClientAction;
 import fr.insalyon.dasi.ihm.web.action.HistoriqueEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumsAction;
+import fr.insalyon.dasi.ihm.web.action.PredictionAction;
 import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
 import fr.insalyon.dasi.ihm.web.action.ReserverConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.StatistiquesAction;
@@ -20,6 +21,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.PredictionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ReserverConsultationSerialisation;
@@ -108,6 +110,10 @@ public class ActionServlet extends HttpServlet {
                 case "statistiques":
                     action = new StatistiquesAction();
                     serialisation = new StatistiquesSerialisation();
+                    break;
+                case "obtenirPrediction":
+                    action = new PredictionAction();
+                    serialisation = new PredictionSerialisation();
                     break;
             }
         }

@@ -667,15 +667,27 @@ header{
    margin:5vw;
    width:60%;
 }
+.empConsultation-commentaire{
+    display:none;
+}
+
+.empConsultation-commentaire textarea{
+    align-self: center;
+    width:80%;
+    height:100%;
+    margin:40px;
+    border:1px solid black;
+    resize: none;
+    padding:10px;
+}
 
 .empConsultation-infoClient{
     display:flex;
     flex-direction: column;
     text-align:center;
+    justify-content: center;
     border:2px solid black;
     padding:2vw;
-    margin:5vw;
-    width:40%;
 }
 .empConsultation-enCours{
     display:none;
@@ -688,7 +700,7 @@ header{
     border-right:1px solid black;
 }
 
-.empConsultation-infoClient #last{
+.empConsultation-infoClient .last{
     border-bottom:1px solid black; 
 }
 .sous-titre{
@@ -706,7 +718,9 @@ header{
     padding:20px;
     border:2px solid black;
     width:100%;
+    height: 30vh;
     min-height: 200px;
+    margin-bottom:20px;
 }
 .empConsultation-historique-titre{
     display:flex;
@@ -727,7 +741,7 @@ header{
 }
 
 .empConsultation-historique-date{
-      display:flex;
+    display:flex;
     justify-content: space-between;  
 }
 
@@ -752,6 +766,49 @@ header{
     width:100%;
 }
 
+.range-container{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    width:25%;
+    margin:1vw;
+    border:1px solid black;
+    border-radius:20px;
+}
+
+#button-prediction{
+    padding:5px;
+    background-color:greenyellow;
+    border:1px solid black;
+    margin:1vw;
+    width:10vw;
+    height: 3vw;
+}
+.prediction-container{
+    display:flex;
+    flex-direction:row;
+}
+
+.predictions{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: left;
+}
+
+.predictions h3{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.container-column{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:40%;
+    margin:5vw;
+}
 /*
     -------------- STATISTIQUES ---------
 */
