@@ -24,6 +24,7 @@ public class DeconnecterSerialisation extends Serialisation{
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {  
         JsonObject container = new JsonObject();
+        container.addProperty("reussite", true);
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();

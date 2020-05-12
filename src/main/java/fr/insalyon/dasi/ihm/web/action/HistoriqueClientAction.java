@@ -21,7 +21,7 @@ public class HistoriqueClientAction extends Action {
         Service service = new Service();
         
         //Recuperation du client
-       Client client=null;
+        Client client=null;
         Long id=new Long(request.getParameter("idClient"));
         //Recuperation du client
         if(id!=null){

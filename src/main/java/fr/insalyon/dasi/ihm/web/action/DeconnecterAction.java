@@ -16,9 +16,12 @@ public class DeconnecterAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
-     HttpSession session = request.getSession();
-     session.removeAttribute("idClient");
-     session.removeAttribute("idEmployes");
+       HttpSession session = request.getSession();
+       
+       if(session.getAttribute("idClient")!=null){
+           session.removeAttribute("idClient");
+       } else if(session.getAttribute("idEmploye")!=null){
+           session.removeAttribute("idEmploye");
+       }
     }
-    
 }
