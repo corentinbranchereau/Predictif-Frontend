@@ -58,6 +58,15 @@
                 </div>
                 <div class="empConsultation-enCours">
                     <h2 class="sous-titre">Aide à la prédiction</h2>
+                    <div class="range-container">
+                     Amour :  1
+                     <input type="range" id="amour-range" name="amour" min="1" max="4"/>4 
+                     Travail :  1
+                     <input type="range" id="travail-range" name="travail" min="1" max="4"/>4 
+                     Sante :  1
+                     <input type="range" id="sante-range" name="sante" min="1" max="4"/>4 
+                    </div>
+                    
                 </div>
             </div>
             <div class="empConsultation-commentaire">
@@ -261,6 +270,7 @@
                  initProfilAstral();
                  listeConsultation();
                  detailConsultation();
+                 AffichageMode2();
                  $('#button-deconnecter').on('click',Deconnecter);
                  $('#button-suivant').on('click',function(){ConsultationSuivante(1);});
                  $('#button-precedent').on('click',function(){ConsultationSuivante(-1);});
