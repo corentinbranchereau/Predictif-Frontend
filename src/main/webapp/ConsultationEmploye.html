@@ -11,7 +11,7 @@
     <header>
          <div class="top-buttons">
             <button type="button" class = "hvr-shrink" id="button-retour" onclick="window.location.href='./tableauBordEmploye.html'">Retour au tableau de bord</button>
-            <button type="button" class = "hvr-shrink" id="button-deconnecter" onclick='AffichageMode2()'>Commencer la consultation</button>
+            <button type="button" class = "hvr-shrink" id="button-deconnecter" onclick='CommencerConsultation()'>Commencer la consultation</button>
           </div>
           <div class="container-header">
             <div class="logo-header"></div>
@@ -21,14 +21,14 @@
     <body>
         
         <div class="title-emp">
-            <h1>Débuter la Consultation</h1>
+            <h1 id="champ-titre">Avant de Commencer...</h1>
         </div>
         
         <div class="empConsultation-container">
            <div class="container-column"> 
                 <div class="empConsultation-infoClient">
                      <h2 class="sous-titre">Médium à Incarner</h2>
-                        <p><strong> Nom :</strong> <span id="champ-nom-medium"></span></p>
+                        <p><strong> Nom :</strong> <span class="champ-nom-medium"></span></p>
                         <p><strong>type:</strong> <span id="champ-type-medium"></span></p>
                         <p class="last"><strong> support :</strong> <span id="champ-support-medium"></span></p>
                 </div>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="empConsultation-begin">
-                    Consultation le: <span id="champ-beginConsultation"></span>
+                    Consultation le: <span class="champ-beginConsultation"></span>
                     <button id="button-commencer-consultation"> Commencer la consultation</button> 
                 </div>
                 <div class="empConsultation-enCours">
@@ -82,7 +82,7 @@
                             <div>1
                             <input type="range" id="sante-range" name="sante" min="1" max="4"/>4 
                             </div>
-                            <button id="button-prediction">Prédiction</button>
+                            <button id="button-prediction">Prédire</button>
                          </div>
                         <div class="predictions">
                             <h3>Amour :</h3>
@@ -97,11 +97,11 @@
                 </div>
             </div>
             <div class="empConsultation-commentaire">
-                <h2 class="sous-titre">Laisser un commentaire</h2>
+                <h2 class="sous-titre">Résumé de votre consultation</h2>
                     <div class="empConsultation-historique-date">
-                        <p>Le <span class="champ-dateConsultation"></span></p>
-                        <p> Medium: <span class="champ-medium"></span></p>
-                        <p> Durée:<span class="champ-duree"></span></p>
+                        <p>Le <span class="champ-beginConsultation"></span></p>
+                        <p> Medium: <span class="champ-nom-medium"></span></p>
+                        <p> Durée:<span class="champ-duree2"></span></p>
                     </div>
                 <textarea id="champ-fin-commentaire" placeholder="Laissez votre commentaire ici"></textarea>
             </div>
@@ -116,7 +116,7 @@
             var animal;
             var couleur;
             var debutConsultation;
-            var FinConsultation;
+            var finConsultation;
             
              // URL Parser --> Récupération des paramètres GET
             var parseQueryString = function() {
@@ -201,8 +201,8 @@
                     console.log(consultation);
                     if(consultation != null)
                     {
-                       $('#champ-beginConsultation').html(consultation.dateDebut);
-                       $('#champ-nom-medium').html(consultation.medium.denomination);
+                       $('.champ-beginConsultation').html(consultation.dateDebut);
+                       $('.champ-nom-medium').html(consultation.medium.denomination);
                        $('#champ-type-medium').html(consultation.medium.type);
                        $('#champ-support-medium').html(consultation.medium.support);
                     }
@@ -226,6 +226,8 @@
             }
             
             function CommencerConsultation(){
+                var d=new Date();
+                debutConsultation=d.getTime()/60000;
               $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
@@ -246,8 +248,28 @@
             };
             
             function TerminerConsultation(){
-                
-            }
+                var com=$('#champ-fin-commentaire').val();
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'terminerConsultation',
+                        id:idConsultation,
+                        commentaire:com
+                        
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                   console.log(response);
+                   window.location.href='./tableauBordEmploye.html';
+
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            };
             
             function ObtenirPrediction(){
               $.ajax({
@@ -287,7 +309,8 @@
                 $('#button-retour').html("Retour au Tableau de Bord");
                 $('#button-retour').attr("onclick","window.location.href='./tableauBordEmploye.html'");
                  $('#button-deconnecter').html("Commencer La consultation");
-                $('#button-deconnecter').attr("onclick","AffichageMode2()");
+                $('#button-deconnecter').attr("onclick","CommencerConsultation()");
+                $('#champ-titre').html("Avant de Commencer...");
             }
             
             function AffichageMode2(){
@@ -306,6 +329,7 @@
                 $('#button-retour').attr("onclick","AffichageMode1()");
                 $('#button-deconnecter').html("Terminer la consultation");
                 $('#button-deconnecter').attr("onclick","AffichageMode3()");
+                $('#champ-titre').html("Consultation en cours");
             }
             
              function AffichageMode3(){
@@ -321,7 +345,12 @@
                 $('#button-retour').html("Retour à la consultation");
                 $('#button-retour').attr("onclick","AffichageMode2()");
                 $('#button-deconnecter').html("Valider et aller à l'Accueil");
-                $('#button-deconnecter').attr("onclick","window.location.href='./tableauBordEmploye.html'");
+                $('#button-deconnecter').attr("onclick","TerminerConsultation()");
+                var d=new Date();
+                finConsultation=d.getTime()/60000;
+                var duree=finConsultation-debutConsultation;
+                $('.champ-duree2').html(" "+duree.toFixed()+" min");
+                $('#champ-titre').html("Consultation terminée!");
             }
             
             
