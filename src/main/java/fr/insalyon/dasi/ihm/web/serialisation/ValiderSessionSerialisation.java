@@ -17,8 +17,10 @@ public class ValiderSessionSerialisation extends Serialisation{
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean valid = (boolean)request.getAttribute("valid");
-        
+        boolean valid=false;
+        if(request.getAttribute("valid")!=null){
+             valid = (boolean)request.getAttribute("valid");
+        }
         JsonObject container = new JsonObject();
 
         container.addProperty("valid",valid);

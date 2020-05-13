@@ -61,13 +61,10 @@ experts en voyance afin de prendre la meilleur décision ! </p>
           
           <script>
              var idMedium=0;
-             var idMediumSuivant=2;
-             var idMediumPrecedent=0;
              var nbMedium=0;
              var listeMediums;
-            $(document).ready( function () {
-                
-                 function apelAjax() { // Fonction appelée lors du clic sur le bouton
+             
+            function apelAjax() { // Fonction appelée lors du clic sur le bouton
                     // Appel AJAX
                     $.ajax({
                         url: './ActionServlet',
@@ -91,10 +88,10 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                         
                         
                     });
-                };
+            };
                 
                 
-                function initMedium(){
+            function initMedium(){
                     nbMedium=listeMediums.length;
                        $('#medium-denomination').html("Nom : "+listeMediums[idMedium].denomination);
                        $('#medium-presentation').html(listeMediums[idMedium].presentation);
@@ -116,64 +113,57 @@ experts en voyance afin de prendre la meilleur décision ! </p>
                            $('#medium-formation').html("Formation : "+listeMediums[idMedium].formation);
                        }
                       
-                };
-                
-               $('#caroussel-suivant').on( 'click', function (){
-                    idMedium++;
-                    idMediumPrecedent++;
-                    idMediumSuivant++;
+            };
+
+
+            function defilement(){
+                   idMedium++;
                     if(idMedium>=nbMedium){
                         idMedium=0;
                     }
-                     if(idMediumPrecedent>=nbMedium){
-                        idMediumPrecedent=0;
-                    }
-                     if(idMediumSuivant>=nbMedium){
-                        idMediumSuivant=0;
-                    }
                      $(".caroussel-sub-container").animate({
+                        opacity:'0'
+                    },500);
+                    setTimeout(initMedium,500);
+                    $(".caroussel-sub-container").animate({
+                        opacity:'1'
+                    },500);
+                    
+            };
+    
+            $(document).ready( function () {             
+                 apelAjax();
+                
+                setInterval(defilement,4000);
+               $('#caroussel-suivant').on( 'click', function (){
+                    idMedium++;
+                    if(idMedium>=nbMedium){
+                        idMedium=0;
+                    }
+                    /* $(".caroussel-sub-container").animate({
                         opacity:'0'
                     },10);
                     $(".caroussel-sub-container").animate({
                         opacity:'1'
-                    },500);
+                    },500);*/
                     initMedium();
                 });
                 
                 $('#caroussel-precedent').on( 'click', function () { 
                     idMedium--;
-                    idMediumPrecedent--;
-                    idMediumSuivant--;
                     if(idMedium<0){
-                        idMedium=nbMedium-2;
+                        idMedium=nbMedium-1;
                     }
-                    if(idMediumPrecedent<0){
-                        idMediumPrecedent=nbMedium-2;
-                    }
-                    if(idMediumSuivant<0){
-                        idMediumSuivant=nbMedium-2;
-                    }
-                    $(".caroussel-sub-container").animate({
+                  
+                   /* $(".caroussel-sub-container").animate({
                         opacity:'0'
                     },10);
                     $(".caroussel-sub-container").animate({
                         opacity:'1'
-                    },500);
+                    },500);*/
                     initMedium();
                 });
-                apelAjax();
-                /*
-                $('#caroussel-suivant').click(function(){
-                    $(".caroussel-sub-container").animate({
-                        right:'-1500px'
-                    });
-                    $(".caroussel-sub-containerP").animate({
-                        left:'10vw',
-                        rigth:'10vw'
-                    });
-                });
-               
-                */
+                
             });
         </script>
        </body>

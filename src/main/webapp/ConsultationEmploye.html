@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="empConsultation-begin">
-                    Consultation le: <span class="champ-beginConsultation"></span>
+                    Votre client recevra une notification dès que vous cliquerez sur ce bouton: <span class="champ-beginConsultation"></span>
                     <button id="button-commencer-consultation"> Commencer la consultation</button> 
                 </div>
                 <div class="empConsultation-enCours">
@@ -99,7 +99,7 @@
             <div class="empConsultation-commentaire">
                 <h2 class="sous-titre">Résumé de votre consultation</h2>
                     <div class="empConsultation-historique-date">
-                        <p>Le <span class="champ-beginConsultation"></span></p>
+                        <p><span class="champ-beginConsultation"></span></p>
                         <p> Medium: <span class="champ-nom-medium"></span></p>
                         <p> Durée:<span class="champ-duree2"></span></p>
                     </div>
@@ -117,6 +117,7 @@
             var couleur;
             var debutConsultation;
             var finConsultation;
+            var loop;
             
              // URL Parser --> Récupération des paramètres GET
             var parseQueryString = function() {
@@ -201,7 +202,7 @@
                     console.log(consultation);
                     if(consultation != null)
                     {
-                       $('.champ-beginConsultation').html(consultation.dateDebut);
+                       $('.champ-beginConsultation').html("Consultation commencée le "+consultation.dateDebut);
                        $('.champ-nom-medium').html(consultation.medium.denomination);
                        $('#champ-type-medium').html(consultation.medium.type);
                        $('#champ-support-medium').html(consultation.medium.support);
@@ -311,6 +312,7 @@
                  $('#button-deconnecter').html("Commencer La consultation");
                 $('#button-deconnecter').attr("onclick","CommencerConsultation()");
                 $('#champ-titre').html("Avant de Commencer...");
+                clearInterval(loop);
             }
             
             function AffichageMode2(){
@@ -330,6 +332,7 @@
                 $('#button-deconnecter').html("Terminer la consultation");
                 $('#button-deconnecter').attr("onclick","AffichageMode3()");
                 $('#champ-titre').html("Consultation en cours");
+                loop=setInterval(boucleTitre,2000);
             }
             
              function AffichageMode3(){
@@ -351,9 +354,14 @@
                 var duree=finConsultation-debutConsultation;
                 $('.champ-duree2').html(" "+duree.toFixed()+" min");
                 $('#champ-titre').html("Consultation terminée!");
+                clearInterval(loop);
             }
             
-            
+            function boucleTitre(){
+                $('#champ-titre').html("Consultation en cours.  ");
+                setTimeout(function(){$('#champ-titre').html("Consultation en cours.. ");},500);
+                setTimeout(function(){$('#champ-titre').html("Consultation en cours...");},1000);
+            };
             
             function ConsultationSuivante(page){
                 console.log(page);
