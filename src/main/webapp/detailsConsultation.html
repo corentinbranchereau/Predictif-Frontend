@@ -116,31 +116,6 @@
                 });
             };
             
-            function initProfilAstral() { // Fonction appelée lors du clic sur le bouton
-                // Appel AJAX
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'profilAstral'
-                    },
-                    dataType: 'json'
-                })
-                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    $('#prenom_client').html("Heureux de vous revoir,&nbsp"+response.prenom);
-                    
-                    var profil = response.profilAstral;
-                    
-                    $('#champ-zodiaque').html(profil.zodiaque);
-                    $('#champ-chinois').html(profil.astroChinois);
-                    $('#champ-couleur').html(profil.couleur);
-                    $('#champ-totem').html(profil.animalTotem);
-                })
-                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error',error); // LOG dans Console Javascript
-                    alert("Erreur lors de l'appel AJAX");
-                })
-            };
             
             function ValiderSession(){
                 $.ajax({
@@ -154,7 +129,6 @@
                 })
                 .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                     if(response.valid==true){
-                        initProfilAstral();
                         initConsultation();
                     } else {
                         window.location.href='./login.html';
