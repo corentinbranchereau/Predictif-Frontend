@@ -15,6 +15,7 @@ import fr.insalyon.dasi.ihm.web.action.ProfilAstralAction;
 import fr.insalyon.dasi.ihm.web.action.ReserverConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.StatistiquesAction;
 import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.ValiderSessionAction;
 import fr.insalyon.dasi.ihm.web.serialisation.CommencerConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DeconnecterSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DetailsConsultationSerialisation;
@@ -29,6 +30,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.ReserverConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.StatistiquesSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.TerminerConsultationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ValiderSessionSerialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -120,6 +122,10 @@ public class ActionServlet extends HttpServlet {
                 case "terminerConsultation":
                     action = new TerminerConsultationAction();
                     serialisation = new TerminerConsultationSerialisation();
+                    break;
+                case "validerSession":
+                    action = new ValiderSessionAction();
+                    serialisation = new ValiderSessionSerialisation();
                     break;
             }
         }

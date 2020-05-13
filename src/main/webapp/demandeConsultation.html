@@ -95,6 +95,30 @@
                     
                 };
                 
+                function ValiderSession(){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'validerSession',
+                            verificationType:'client'
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        if(response.valid==true){
+                            apelAjax();
+                        } else {
+                            window.location.href='./login.html';
+                        }
+
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+                
                 function Deconnecter(){
                     $.ajax({
                         url: './ActionServlet',
@@ -201,7 +225,7 @@
                 
                 
                  $(document).ready( function () {
-                    apelAjax();
+                    ValiderSession();
                     $('#reserver-consultation').click(ReserverConsultation);
                     $('#button-deconnecter').on('click',Deconnecter);
                    

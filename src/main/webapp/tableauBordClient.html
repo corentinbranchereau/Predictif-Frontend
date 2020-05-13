@@ -137,10 +137,34 @@
                 });
             };
             
+            function ValiderSession(){
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'validerSession',
+                        verificationType:'client'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    if(response.valid==true){
+                        initProfilAstral();
+                        initConsultation();
+                    } else {
+                        window.location.href='./login.html';
+                    }
+                   
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            }
+            
                 
             $(document).ready( function (){ //Appelé à la fin de la page HTML
-                initProfilAstral();
-                initConsultation();
+                ValiderSession();
                 $('#button-deconnecter').on('click',Deconnecter);
             });
         </script>
