@@ -31,7 +31,7 @@ public class HistoriqueEmployeAction extends Action {
         
         //Appel des services Métiers
         List<Consultation> historiqueEmploye = service.HistoriqueEmployeTrié(employe);
-        
+        System.out.println("historique employe: "+employe+ historiqueEmploye);
         //Stockage des résultats dans les attributs de la requête
         request.setAttribute("historique", historiqueEmploye);
         request.setAttribute("employe", employe);

@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="next-consultation">
-            <p>Prochaine consultation 
+            <p>
             <span id="champ-date-consultation"></span>
             </p>
             <button class="hvr-forward" id="button-next-consultation"> > Commencer la consultation</button>
@@ -44,6 +44,7 @@
         <script>
             var idNextClient=null;
             var consultationId=null;
+            var prochaineConsultation=null;
     
             function HistoriqueConsultationEmploye() { // Fonction appelée lors du clic sur le bouton
                 // Appel AJAX
@@ -66,7 +67,7 @@
                         var p = document.createElement('p');
                         p.className="consultation";
                         p.idName=0;
-                        p.innerHTML="<strong>Vous n'avez pas encore consulté. N'hésitez plus !</strong>";
+                        p.innerHTML="<strong>Vous n'avez pas encore de consultation. N'hésitez plus !</strong>";
                         list.appendChild(p);
                     }
                     else
@@ -84,11 +85,18 @@
                             };
                             p.innerHTML="<strong>"+c.medium.denomination+"</strong> : le "+c.dateDebut+" - "+c.client.prenom+" "+c.client.nom;
                             list.appendChild(p);
-                            }else{
+                            }else if(prochaineConsultation==null){
+                                prochaineConsultation=c;
                                 idNextClient=c.client.id;
                                 consultationId=c.id;
-                                $('#champ-date-consultation').html("Le "+c.dateDebut+", avec "+c.client.prenom+" "+c.client.nom);
+                                $('#champ-date-consultation').html("Prochaine Consultation prévue avec "+c.client.prenom+" "+c.client.nom+", en jouant le rôle de "+c.medium.denomination);
                             }
+                        }
+                        if(prochaineConsultation==null){
+                            $('#champ-date-consultation').html("Pas de consultation de prévue");
+                            $('#button-next-consultation').attr('disabled', true);
+                            $('#button-next-consultation').css({'display':'none'});
+                            $('#button-next-consultation').html("");
                         }
                     }
                 })

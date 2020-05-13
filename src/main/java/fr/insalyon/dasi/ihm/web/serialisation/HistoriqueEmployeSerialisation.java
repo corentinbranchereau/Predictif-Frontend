@@ -65,11 +65,12 @@ public class HistoriqueEmployeSerialisation extends Serialisation{
         container.add("consultations",jsonListeConsultation);
         JsonObject jsonEmploye=new JsonObject();
         
-        jsonEmploye.addProperty("id",employe.getId());
-        jsonEmploye.addProperty("nom",employe.getNom());
-        jsonEmploye.addProperty("prenom",employe.getPrenom());
-        container.add("employe",jsonEmploye);
-        
+        if(employe!=null){
+            jsonEmploye.addProperty("id",employe.getId());
+            jsonEmploye.addProperty("nom",employe.getNom());
+            jsonEmploye.addProperty("prenom",employe.getPrenom());
+            container.add("employe",jsonEmploye);
+        }
         
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();

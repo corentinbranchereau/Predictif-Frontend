@@ -408,6 +408,8 @@ header{
     margin-top: 20px;
     margin-left: 5px;
     margin-right: 5px;
+    overflow-y: scroll;
+    max-height:30vh;
 }
 
 .historique-client-container .consultation{
@@ -635,6 +637,7 @@ header{
     padding:10px;
     font-size:20px;
     justify-content: space-around;
+    margin-top:5vw;
     
 }
 #button-next-consultation{

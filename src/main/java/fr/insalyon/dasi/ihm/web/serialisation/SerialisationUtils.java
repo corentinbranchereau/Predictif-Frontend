@@ -43,13 +43,21 @@ public class SerialisationUtils {
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy 'à' hh'h'mm");
 
         //Sérialisation de la consultation et de ses propriétés
-        jsonConsultation.addProperty("id",c.getId());
-        jsonConsultation.addProperty("dateDebut",formater.format(c.getDateDebut()));
-        jsonConsultation.addProperty("duree",c.getDuree());
+        if(c.getId()!=null){
+            jsonConsultation.addProperty("id",c.getId());
+        }
+        if(c.getDateDebut()!=null){
+            jsonConsultation.addProperty("dateDebut",formater.format(c.getDateDebut()));
+        }
+        if(c.getDuree()!=null){
+            jsonConsultation.addProperty("duree",c.getDuree());
+        }
         
-        if(com){jsonConsultation.addProperty("commentaire",c.getCommentaire());}
+        if(com && c.getCommentaire()!=null){jsonConsultation.addProperty("commentaire",c.getCommentaire());}
         
-        jsonConsultation.addProperty("estTerminee",c.getEstTerminee());
+        if(c.getEstTerminee()!=null){
+            jsonConsultation.addProperty("estTerminee",c.getEstTerminee());
+        }
         
         return jsonConsultation;
     }
