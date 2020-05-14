@@ -2,7 +2,8 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css" type="text/css"/>
-
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">    
         <meta charset="UTF-8">
         <title>Creer un Compte</title>
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
@@ -26,27 +27,48 @@
         </div>
         <!-- Paragraphe avec id="notification" pour les messages de notification -->
         <p id="notification">Veuillez saisir vos informations.</p>
-        <div class="account-main-container">
-            <div class="new-account-name">
-                Prenom : <br>
-            </div>
-            <div class="new-account-form">
-                Nom: <input type="text" id="champ-nom" size="40" /><br/>
-                Prénom:<input type="text" id="champ-prenom" size="40" /><br/>
-                Genre: <input type="radio" class="genre" name="genre" value="Masculin"/> 
-                        <label for="Masculin">Masculin</label>
-                       <input type="radio" class="genre" name="genre" value="Feminin"/>
-                       <label for="Feminin">Feminin</label>
-                       <input type="radio" class="genre" name="genre" value="Autre"/>
-                       <label for="Autre">Autre</label><br/>
-                Adresse: <input type="text" id="champ-adresse" size="40" /><br/>
-                Téléphone: <input type="text" id="champ-telephone" size="40" /><br/>
-                Date de Naissance: <input type="text" id="champ-dateNaissance" size="40" /><br/>
-                Email: <input type="text" id="champ-email" size="40" /><br/>
-                Mot de Passe: <input type="password" id="champ-password" size="40" /><br/>
+        
+        <div class="new-account-main-container">
+            <div class="testbox">
+                <h1>Inscription</h1>
+                <form action="/">
+                    <label id="icon" for="name"><i class="icon-user"></i></label>
+                    <input type="text" name="name" id="champ-nom" placeholder="Nom" required/>
+
+                    <label id="icon" for="prenom"><i class="icon-tag"></i></label>
+                    <input type="text" name="prenom" id="champ-prenom" placeholder="Prenom" required/>
+
+                    <label id="icon" for="date"><i class="icon-calendar"></i></label>
+                    <input type="date" name="date" id="champ-dateNaissance" placeholder="Date de naissance" required/>
+
+                        <hr>
+                    <div class="gender">
+                      <input type="radio" value="Masculin" id="Masculin" name="gender" checked="checked"/>
+                      <label for="Masculin" class="radio">Masculin</label>
+                      <input type="radio" value="Feminin" id="Feminin" name="gender" />
+                      <label for="Feminin" class="radio">Féminin</label>
+                    </div> 
+                        <hr>
+                        
+                    <label id="icon" for="adresse"><i class="icon-home"></i></label>
+                    <input type="text" name="adresse" id="champ-adresse" placeholder="Adresse" required/>
+
+                    <label id="icon" for="telephone"><i class="icon-phone"></i></label>
+                    <input type="tel" name="telephone" id="champ-telephone" placeholder="Téléphone" required/>
+
+                    <label id="icon" for="email"><i class="icon-envelope "></i></label>
+                    <input type="text" name="email" id="champ-email" placeholder="Email" required/>
+
+                    <label id="icon" for="password"><i class="icon-shield"></i></label>
+                    <input type="password" name="password" id="champ-password" placeholder="Mot de passe" required/>
+
+                     <a class="button" id="bouton-inscription">Inscription</a>
+                </form>
             </div>
         </div>
-        <button id="bouton-inscription">Inscription</button>
+        <!-- <button id="bouton-inscription">Inscription</button> -->
+        
+        
         
         <script>
             $(document).ready( function () {
@@ -57,13 +79,21 @@
 
                     // Récupération de la valeur des champs du formulaire
                     var champNom = $('#champ-nom').val();
+                    console.log(champNom);
                     var champPrenom = $('#champ-prenom').val();
-                    var champGenre = $('.genre:checked').val();
+                    console.log(champPrenom);
+                    var champGenre = document.querySelector('input[name="gender"]:checked').value;
+                    console.log(champGenre);
                     var champAdresse = $('#champ-adresse').val();
+                    console.log(champAdresse);
                     var champTelephone= $('#champ-telephone').val();
-                    var champNaissance = $('#champ-dateNaissance').val();
+                    console.log(champTelephone);
+                    var champNaissance = format($('#champ-dateNaissance').val());
+                    console.log(champNaissance);
                     var champEmail = $('#champ-email').val();
+                    console.log(champEmail);
                     var champPassword = $('#champ-password').val();
+                    console.log(champPassword);
 
                     // Appel AJAX
                     $.ajax({
@@ -103,6 +133,14 @@
                     });
                 });
             });
+            
+            function format(inputDate) {
+                var date = new Date(inputDate);
+                if (!isNaN(date.getTime())) {
+                    // Months use 0 index.
+                    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+            }
         </script>
         
     </body>
