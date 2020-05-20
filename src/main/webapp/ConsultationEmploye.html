@@ -202,7 +202,7 @@
                     console.log(consultation);
                     if(consultation != null)
                     {
-                       $('.champ-beginConsultation').html("Consultation commencée le "+consultation.dateDebut);
+                       $('.champ-beginConsultation').html(consultation.dateDebut);
                        $('.champ-nom-medium').html(consultation.medium.denomination);
                        $('#champ-type-medium').html(consultation.medium.type);
                        $('#champ-support-medium').html(consultation.medium.support);
@@ -364,7 +364,6 @@
             };
             
             function ConsultationSuivante(page){
-                console.log(page);
                 if(nbConsultations!=0){
                     viewedConsultation+=page;
                     if(viewedConsultation>=nbConsultations){
@@ -373,7 +372,8 @@
                     if(viewedConsultation<0){
                         viewedConsultation=nbConsultations-1;
                     }
-                    AfficherConsultation;
+                    
+                    AfficherConsultation();
                 }
             }
             

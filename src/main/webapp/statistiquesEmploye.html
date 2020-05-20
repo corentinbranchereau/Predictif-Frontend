@@ -7,6 +7,10 @@
         <title>Statistiques</title>
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     </head>
     
     <header>
@@ -23,7 +27,7 @@
         <div class="title-emp">
             <h1 id="title-header">Statistiques</h1>
         </div>
-        
+        <button id="button-affichage">Affichage</button>
         <div class="page-container">
             <div class="left-container">
                 <div class="bilan-horaire-container">
@@ -40,9 +44,9 @@
                     <div class = "nbre-clients-header">
                          <h2>Nombre de clients par employé</h2>
                     </div>
-
+                    <div id="chartContainer"></div>
                     <div class = "nbre-clients-subcontainer" id="list-employes">
-                        
+                     
                     </div>
                  </div>
             </div>
@@ -51,13 +55,16 @@
                 <div class="medium-consultes-header">
                     <h2>Médiums les plus consultés</h2>
                 </div>
-
+                <div id="chartContainer1"></div>
                 <div class="medium-consultes-subcontainer" id="list-mediums">
-                   
+                
                 </div>
             </div>
         </div>
-        
+        <div class="charts-stat">
+            
+            
+        </div>
         <script>
             function Statistiques() { // Fonction appelée lors du clic sur le bouton
                 // Appel AJAX
@@ -80,7 +87,7 @@
                     var nbConsultations = response.nbConsultations;
                     var nbHeures = response.nbHeures;
                    
-                    $('#champ-bilan-horaire').html(nbConsultations+" consultations : "+nbHeures+ " minutes ");
+                    $('#champ-bilan-horaire').html(nbConsultations+" consultations : "+ parseInt(nbHeures/60) + " heures et "+nbHeures%60 +" minutes");
                     
                     if(statsMediums.length==0)
                     {
@@ -93,6 +100,17 @@
                     }
                     else
                     {
+                        var options1 = {
+                                animationEnabled: true,
+                                
+                                data: [{
+                                        type: "column", //change it to line, area, bar, pie, e
+                                        dataPoints: [
+                                             
+                                                ]
+                                        }]
+                        };
+                        
                         for(var i = 0; i<statsMediums.length; i++)
                         {
                             var m = statsMediums[i];
@@ -100,9 +118,13 @@
                             div.className="medium-consultes-selfcase hvr-underline-from-center";
                             var p = document.createElement('p');
                             p.innerHTML=m.denomination+" : "+m.value+" consultation(s) ";
+                            options1.data[0].dataPoints[i]={label: m.denomination, y: m.value};
                             div.appendChild(p);
                             listMediums.appendChild(div);
-                        }    
+                        }  
+                        console.log(options1.data[0].dataPoints[0]);
+                        $("#chartContainer1").CanvasJSChart(options1);
+                               
                     }
                     
                     if(statsEmployes.length==0)
@@ -116,6 +138,21 @@
                     }
                     else
                     {
+                        var options2 = {
+                                animationEnabled: true,
+                                
+                                data: [{
+                                        type: "doughnut",
+                                        innerRadius: "40%",
+                                        legendText: "{label}",
+                                        indexLabel: "{label}: #percent%",
+                                        dataPoints: [
+                                                
+                                        ]
+                                }]
+                        };
+
+                        
                         for(var i = 0; i<statsEmployes.length; i++)
                         {
                             var e = statsEmployes[i];
@@ -123,9 +160,13 @@
                             div.className="nbre-clients-selfcase hvr-underline-from-center";
                             var p = document.createElement('p');
                             p.innerHTML=e.prenom+" "+e.nom+" : "+e.value+" consultation(s) ";
+                            options2.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.value};
                             div.appendChild(p);
                             listEmployes.appendChild(div);   
                         }
+                        
+                        $("#chartContainer").CanvasJSChart(options2);
+                        
                     }
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -175,10 +216,28 @@
                         alert("Erreur lors de l'appel AJAX");
                     });
             };
-                
+            var bool=true;
+            function Affichage(){
+                if(bool==true){
+                    $("#list-mediums").show();
+                    $("#list-employes").show();
+                    $("#chartContainer").hide();
+                    $("#chartContainer1").hide();
+                    bool=false;
+                }else{
+                    bool=true;
+                    $("#list-mediums").hide();
+                    $("#list-employes").hide();
+                    $("#chartContainer").show();
+                    $("#chartContainer1").show();
+                }
+            }
             $(document).ready( function (){ //Appelé à la fin de la page HTML 
                 ValiderSession();
+                $("#list-mediums").hide();
+                $("#list-employes").hide();
                 $('#button-deconnecter').on('click',Deconnecter);
+                $('#button-affichage').on('click',Affichage);
             });
         </script>
     </body>
