@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DASI Team
  */
-public class ProfilClientSerialisation extends Serialisation {
+public class AuthentifierUtilisateurSerialisation extends Serialisation {
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,8 +30,6 @@ public class ProfilClientSerialisation extends Serialisation {
             jsonClient.addProperty("id", client.getId());
             jsonClient.addProperty("nom", client.getNom());
             jsonClient.addProperty("prenom", client.getPrenom());
-            jsonClient.addProperty("mail", client.getEmail());
-
             container.add("client", jsonClient);
             container.add("employe", null);
         }
@@ -41,8 +39,6 @@ public class ProfilClientSerialisation extends Serialisation {
             jsonEmploye.addProperty("id", employe.getId());
             jsonEmploye.addProperty("nom", employe.getNom());
             jsonEmploye.addProperty("prenom", employe.getPrenom());
-            jsonEmploye.addProperty("mail", employe.getEmail());
-
             container.add("employe", jsonEmploye);
             container.add("client", null);
         }

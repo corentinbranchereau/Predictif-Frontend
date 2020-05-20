@@ -19,16 +19,17 @@ public class InscrireClientSerialisation extends Serialisation{
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Client client = (Client)request.getAttribute("client");
-        ProfilAstral profil = (ProfilAstral)request.getAttribute("profil");
-        
         JsonObject container = new JsonObject();
 
-        Boolean inscription = (client != null);
-        Boolean generationProfil = (profil != null);
+        String nom = (String)request.getAttribute("nom");
+        String prenom = (String)request.getAttribute("prenom");
+        Boolean inscription = (Boolean)request.getAttribute("client");
+        Boolean generationProfil = (Boolean)request.getAttribute("profil");
         
         container.addProperty("inscription", inscription);
         container.addProperty("generationProfil", generationProfil);
+        container.addProperty("nom",nom);
+        container.addProperty("prenom",prenom);
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();

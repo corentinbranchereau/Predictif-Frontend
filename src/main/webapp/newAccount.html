@@ -111,14 +111,14 @@
                             dateNaissance: champNaissance
                         },
                         dataType: 'json'
-                    })
+                    }) //TODO : Passer directement le client et récupérer la sérialisation JSON nom + prénom.
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
                         if (response.inscription) {
                             if(response.generationProfil) {
-                                $('#notification').html("Inscription de " + champNom + " " + champPrenom + " réussie. Génération du profil astral réussie.");
+                                $('#notification').html("Inscription de " + response.nom + " " + response.prenom + " réussie. Génération du profil astral réussie.");
                             } else {
-                                $('#notification').html("Inscription de " + champNom + " " + champPrenom + " réussie. Génération du profil échouée.");
+                                $('#notification').html("Inscription de " + response.nom + " " + response.prenom + " réussie. Génération du profil échouée.");
                             }
                         } else {
                             $('#notification').html("Erreur d'inscription."); // Message pour le paragraphe de notification

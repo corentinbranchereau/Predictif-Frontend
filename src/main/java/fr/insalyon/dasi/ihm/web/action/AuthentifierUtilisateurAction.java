@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author DASI Team
  */
-public class AuthentifierClientAction extends Action {
+public class AuthentifierUtilisateurAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {

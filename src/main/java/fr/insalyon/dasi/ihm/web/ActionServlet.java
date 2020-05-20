@@ -2,7 +2,7 @@ package fr.insalyon.dasi.ihm.web;
 
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
-import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
+import fr.insalyon.dasi.ihm.web.action.AuthentifierUtilisateurAction;
 import fr.insalyon.dasi.ihm.web.action.CommencerConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.DeconnecterAction;
 import fr.insalyon.dasi.ihm.web.action.DetailsConsultationAction;
@@ -25,7 +25,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.PredictionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilAstralSerialisation;
-import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.AuthentifierUtilisateurSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ReserverConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.StatistiquesSerialisation;
@@ -72,8 +72,8 @@ public class ActionServlet extends HttpServlet {
         if (todo != null) {
             switch (todo) {
                 case "connecter":
-                    action = new AuthentifierClientAction();
-                    serialisation = new ProfilClientSerialisation();
+                    action = new AuthentifierUtilisateurAction();
+                    serialisation = new AuthentifierUtilisateurSerialisation();
                     break;
                 case "deconnecter":
                     action=new DeconnecterAction();

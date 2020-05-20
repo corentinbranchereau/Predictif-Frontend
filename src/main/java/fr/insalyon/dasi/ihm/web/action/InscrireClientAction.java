@@ -69,8 +69,10 @@ public class InscrireClientAction extends Action{
         }
         
         //Ajout dans la requête
-        request.setAttribute("client", client);
-        request.setAttribute("profil", profil);
+        request.setAttribute("client", client!=null);
+        request.setAttribute("profil", profil!=null);
+        request.setAttribute("nom",client.getNom());
+        request.setAttribute("prenom",client.getPrenom());
     }
     
 }
