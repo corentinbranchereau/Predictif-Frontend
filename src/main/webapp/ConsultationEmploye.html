@@ -27,28 +27,28 @@
         <div class="empConsultation-container">
            <div class="container-column"> 
                 <div class="empConsultation-infoClient">
-                     <h2 class="sous-titre">Médium à Incarner</h2>
-                        <p><strong> Nom :</strong> <span class="champ-nom-medium"></span></p>
-                        <p><strong>type:</strong> <span id="champ-type-medium"></span></p>
-                        <p class="last"><strong> support :</strong> <span id="champ-support-medium"></span></p>
+                     <h2 class="sous-titre">Médium à incarner</h2>
+                        <p class="hvr-underline-from-center"><strong> Nom :</strong> <span class="champ-nom-medium"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Type :</strong> <span id="champ-type-medium"></span></p>
+                        <p class="last hvr-underline-from-center"><strong> Autre :</strong> <span id="champ-support-medium"></span></p>
                 </div>
                 <div class="empConsultation-infoClient">
                     <h2 class="sous-titre">Informations du Client</h2>
-                        <p><strong>Nom :</strong> <span id="champ-nom"></span></p>
-                        <p><strong> Date de Naissance :</strong> <span id="champ-date"></span></p>
-                        <p><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
-                        <p><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
-                        <p><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
-                        <p class="last"><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Nom :</strong> <span id="champ-nom"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Date de Naissance :</strong> <span id="champ-date"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Signe du zodiaque :</strong> <span id="champ-zodiaque"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Signe astrologique chinois :</strong> <span id="champ-chinois"></span></p>
+                        <p class="hvr-underline-from-center"><strong>Couleur porte-bonheur :</strong> <span id="champ-couleur"></span></p>
+                        <p class="last hvr-underline-from-center"><strong>Animal totem :</strong> <span id="champ-totem"></span></p>
                 </div>
                
            </div>
             <div class="empConsultation-sub-container">
                 <div class="empConsultation-historique">
                     <div class="empConsultation-historique-titre">
-                        <button id="button-precedent">Précedent</button>
+                        <button class="hvr-forward-emp" id="button-precedent">Précedent</button>
                         <h2 class="sous-titre">Historique du Client</h2>
-                        <button id="button-suivant">Suivant</button>
+                        <button class="hvr-forward-emp" id="button-suivant">Suivant</button>
                     </div>
                     <div class="empConsultation-historique-date">
                         <p>Le <span class="champ-dateConsultation"></span></p>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="empConsultation-begin">
                     Votre client recevra une notification dès que vous cliquerez sur ce bouton: <span class="champ-beginConsultation"></span>
-                    <button id="button-commencer-consultation"> Commencer la consultation</button> 
+                    <button class="hvr-shutter-out-horizontal-emp" id="button-commencer-consultation"> Commencer la consultation</button> 
                 </div>
                 <div class="empConsultation-enCours">
                     <h2 class="sous-titre">Aide à la prédiction</h2>
@@ -82,7 +82,7 @@
                             <div>1
                             <input type="range" id="sante-range" name="sante" min="1" max="4"/>4 
                             </div>
-                            <button id="button-prediction">Prédire</button>
+                            <button class="hvr-shutter-out-horizontal-emp" id="button-prediction">Prédire</button>
                          </div>
                         <div class="predictions">
                             <h3>Amour :</h3>
@@ -205,7 +205,14 @@
                        $('.champ-beginConsultation').html(consultation.dateDebut);
                        $('.champ-nom-medium').html(consultation.medium.denomination);
                        $('#champ-type-medium').html(consultation.medium.type);
-                       $('#champ-support-medium').html(consultation.medium.support);
+                       var type = consultation.medium.type;
+                       if(type.localeCompare("Spirite")==0) {
+                           $('#champ-support-medium').html("Support - "+consultation.medium.support);
+                       } else if(type.localeCompare("Astrologue")==0) {
+                           $('#champ-support-medium').html("Formation - "+consultation.medium.formation+" et Promotion "+consultation.medium.promotion);
+                       } else {
+                           $('#champ-support-medium').html("Aucun.");
+                       }
                     }
                 })
                 .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX

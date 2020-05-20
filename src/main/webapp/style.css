@@ -212,7 +212,10 @@ header{
     display:flex;
     flex-direction:row;
     justify-content: space-around;
-    margin:10vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 2vw;
+    margit-bottom: 3vw;
     font-size:30px;
 }
 
@@ -347,6 +350,10 @@ header{
        ------------ TABLEAU DE BORD CLIENT ----------
      
 */
+
+#p-marge{
+    margin-top:1000px;
+}
 
 .title h2{
     text-align: center;
@@ -562,6 +569,48 @@ header{
   transform: scaleX(1);
 }
 
+/* Shutter Out Horizontal */
+.hvr-shutter-out-horizontal-emp {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  background: #e1e1e1;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.hvr-shutter-out-horizontal-emp:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #af7ac5;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-shutter-out-horizontal-emp:hover, .hvr-shutter-out-horizontal-emp:focus, .hvr-shutter-out-horizontal-emp:active {
+  color: white;
+}
+.hvr-shutter-out-horizontal-emp:hover:before, .hvr-shutter-out-horizontal-emp:focus:before, .hvr-shutter-out-horizontal-emp:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
 /* Forward */
 .hvr-forward {
   display: inline-block;
@@ -577,6 +626,24 @@ header{
 .hvr-forward:hover, .hvr-forward:focus, .hvr-forward:active {
   -webkit-transform: translateX(8px);
   transform: translateX(8px);
+}
+
+.hvr-forward-emp {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-forward-emp:hover, .hvr-forward-emp:focus, .hvr-forward-emp:active {
+  -webkit-transform: translateX(8px);
+  transform: translateX(8px);
+  background: #af7ac5;
+  color: white;
 }
 
 
@@ -668,7 +735,9 @@ header{
    display:flex;
    flex-direction:column;
    align-items:center;
-   margin:5vw;
+   margin-bottom: 5vw;
+   margin-left: 5vw;
+   margin-right: 5vw;
    width:60%;
 }
 .empConsultation-commentaire{
@@ -741,10 +810,11 @@ header{
 }
 
 #button-commencer-consultation{
-    width:200px;
+    width:250px;
     height:40px;
     border:1px solid black;
-    background-color: greenyellow;
+    background-color: #F54359;
+    color:white;
 }
 
 .empConsultation-historique-date{
@@ -768,6 +838,7 @@ header{
 .empConsultation-begin{
     display:flex;
     justify-content: space-between;
+    align-items: center;
     padding:20px;
     border:2px solid black;
     width:100%;
@@ -786,11 +857,12 @@ header{
 
 #button-prediction{
     padding:5px;
-    background-color:greenyellow;
+    background-color:#F54359;
     border:1px solid black;
     margin:1vw;
     width:10vw;
     height: 3vw;
+    color:white;
 }
 .prediction-container{
     display:flex;
@@ -814,7 +886,9 @@ header{
     flex-direction: column;
     justify-content: space-between;
     width:40%;
-    margin:5vw;
+    margin-bottom: 5vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
 }
 /*
     -------------- STATISTIQUES ---------
