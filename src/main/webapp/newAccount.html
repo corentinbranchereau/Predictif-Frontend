@@ -117,6 +117,7 @@
                         if (response.inscription) {
                             if(response.generationProfil) {
                                 $('#notification').html("Inscription de " + response.nom + " " + response.prenom + " réussie. Génération du profil astral réussie.");
+                                window.location.href='./login.html';
                             } else {
                                 $('#notification').html("Inscription de " + response.nom + " " + response.prenom + " réussie. Génération du profil échouée.");
                             }
@@ -126,7 +127,8 @@
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                         console.log('Error',error); // LOG dans Console Javascript
-                        alert("Erreur lors de l'appel AJAX");
+                        alert("Il manque des informations, merci de réessayer");
+                        $('#notification').html("Il manque des informations, merci de réessayer");
                     })
                     .always( function () { // Fonction toujours appelée
                         

@@ -153,6 +153,8 @@
                        if(response.ConsultationValide==true){
                            $(".notification-consultation").html("Votre Rendez-vous à bien été validé, votre Medium vous contactera d'ici peu");
                            $(".notification-consultation").css({'background-color':"#99ff99"});
+                           $("#reserver-consultation").attr("disabled",true);
+                           $("#reserver-consultation").html("Consultation validée!");
                        }else{
                             $(".notification-consultation").html("Ce Medium est actuellement en Consultation, merci de réessayer plus tard");
                             $(".notification-consultation").css({'background-color':"#ff9980"});

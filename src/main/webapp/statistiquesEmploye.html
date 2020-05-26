@@ -37,6 +37,7 @@
 
                     <div class ="bilan-horaire-contents">
                         <p id="champ-bilan-horaire"></p>
+                        <div id="graph-horaire"></div>
                     </div>
                 </div>
 
@@ -124,7 +125,7 @@
                         }  
                         console.log(options1.data[0].dataPoints[0]);
                         $("#chartContainer1").CanvasJSChart(options1);
-                               
+    
                     }
                     
                     if(statsEmployes.length==0)
@@ -151,8 +152,25 @@
                                         ]
                                 }]
                         };
-
                         
+                        
+                        var options3 = {
+                                animationEnabled: true,
+
+                                axisX: {
+                                        interval: 1
+                                },
+                                axisY: {
+                                        title: "temps en heures",
+                                },
+                                data: [{
+                                        type: "bar",
+                                       
+                                        dataPoints: [
+                                        ]
+                                }]
+                        };
+
                         for(var i = 0; i<statsEmployes.length; i++)
                         {
                             var e = statsEmployes[i];
@@ -161,11 +179,14 @@
                             var p = document.createElement('p');
                             p.innerHTML=e.prenom+" "+e.nom+" : "+e.value+" consultation(s) ";
                             options2.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.value};
+                            options3.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.horaires/60};
                             div.appendChild(p);
                             listEmployes.appendChild(div);   
                         }
                         
                         $("#chartContainer").CanvasJSChart(options2);
+                        var chart = new CanvasJS.Chart("graph-horaire", options3);
+                        chart.render();
                         
                     }
                 })
@@ -223,6 +244,7 @@
                     $("#list-employes").show();
                     $("#chartContainer").hide();
                     $("#chartContainer1").hide();
+                    $("#graph-horaire").hide();
                     bool=false;
                 }else{
                     bool=true;
@@ -230,6 +252,7 @@
                     $("#list-employes").hide();
                     $("#chartContainer").show();
                     $("#chartContainer1").show();
+                    $("#graph-horaire").show();
                 }
             }
             $(document).ready( function (){ //Appelé à la fin de la page HTML 

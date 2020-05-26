@@ -54,6 +54,7 @@ public class StatistiquesSerialisation extends Serialisation {
                 jsonEmploye.addProperty("prenom", p.getKey().getPrenom());
                 jsonEmploye.addProperty("nom", p.getKey().getNom());
                 jsonEmploye.addProperty("value", p.getValue());
+                jsonEmploye.addProperty("horaires",p.getKey().getTempsTravail());
                 
                 jsonListeEmployes.add(jsonEmploye);
             }
