@@ -161,7 +161,7 @@
                                         interval: 1
                                 },
                                 axisY: {
-                                        title: "temps en heures",
+                                        title: "temps en minutes",
                                 },
                                 data: [{
                                         type: "bar",
@@ -179,7 +179,7 @@
                             var p = document.createElement('p');
                             p.innerHTML=e.prenom+" "+e.nom+" : "+e.value+" consultation(s) ";
                             options2.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.value};
-                            options3.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.horaires/60};
+                            options3.data[0].dataPoints[i]={label: e.prenom+" "+e.nom, y: e.horaires};
                             div.appendChild(p);
                             listEmployes.appendChild(div);   
                         }
